@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "123459616166",
+    "project_id": "nagp-amit-quiz",
+    "storage_bucket": "nagp-amit-quiz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:123459616166:android:22a70334ee780393b52367",
+        "android_client_info": {
+          "package_name": "com.example.amit_quiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "123459616166-68me3e3hq3tkkcu6pntus23qittsugv7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0qZ4JZXxzdUgyOzV4Q4Lp_au4hkSWsNY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "123459616166-68me3e3hq3tkkcu6pntus23qittsugv7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
