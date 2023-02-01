@@ -1,24 +1,33 @@
+import 'package:amit_quiz/data_source/firebase_data_source.dart';
+import 'package:amit_quiz/main.dart';
+import 'package:amit_quiz/model/app_user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:amit_quiz/repository/auth_repository.dart';
 
 class AuthRepository extends AuthRepositoryBase {
   final _firebaseAuth = FirebaseAuth.instance;
-
-  AuthUser? _userFromFirebase(User? user) => user == null ? null : AuthUser(user.uid);
-
-  @override
-  Stream<AuthUser?> get onAuthStateChanged => _firebaseAuth.authStateChanges().asyncMap(_userFromFirebase);
+  final FirebaseDataSource _fDataSource = getIt();
 
   @override
-  Future<AuthUser?> createUserWithEmailAndPassword(String email, String password) async {
+  Future<AppUser?> signUp(String email, String password) async {
     final authResult = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
-    return _userFromFirebase(authResult.user);
+    if (authResult.user != null) {
+      final appUser = await _fDataSource.getAppUser();
+      return appUser;
+    } else {
+      return null;
+    }
   }
 
   @override
-  Future<AuthUser?> signInWithEmailAndPassword(String email, String password) async {
+  Future<AppUser?> login(String email, String password) async {
     final authResult = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
-    return _userFromFirebase(authResult.user);
+    if (authResult.user != null) {
+      final appUser = await _fDataSource.getAppUser();
+      return appUser;
+    } else {
+      return null;
+    }
   }
 
   @override

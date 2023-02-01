@@ -57,7 +57,7 @@ class EmailSignInState extends State<EmailSignIn> {
                         child: const Text('Login'),
                         onPressed: () {
                           if (_formKey.currentState?.validate() == true) {
-                            context.read<AuthCubit>().signInWithEmailAndPassword(
+                            context.read<AuthCubit>().login(
                                   _emailController.text,
                                   _passwordController.text,
                                 );

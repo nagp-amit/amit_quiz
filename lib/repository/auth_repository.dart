@@ -1,20 +1,10 @@
-import 'package:equatable/equatable.dart';
-
-class AuthUser extends Equatable {
-  final String uid;
-
-  const AuthUser(this.uid);
-
-  @override
-  List<Object> get props => [uid];
-}
+import 'package:amit_quiz/model/app_user.dart';
 
 abstract class AuthRepositoryBase {
-  Stream<AuthUser?> get onAuthStateChanged;
 
-  Future<AuthUser?> signInWithEmailAndPassword(String email, String password);
+  Future<AppUser?> signUp(String email, String password);
 
-  Future<AuthUser?> createUserWithEmailAndPassword(String email, String password);
+  Future<AppUser?> login(String email, String password);
 
   Future<void> signOut();
 }

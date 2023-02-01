@@ -70,7 +70,7 @@ class EmailCreateState extends State<EmailCreate> {
                         child: const Text('Create'),
                         onPressed: () {
                           if (_formKey.currentState?.validate() == true) {
-                            context.read<AuthCubit>().createUserWithEmailAndPassword(
+                            context.read<AuthCubit>().signUp(
                                   _emailController.text,
                                   _passwordController.text,
                                 );

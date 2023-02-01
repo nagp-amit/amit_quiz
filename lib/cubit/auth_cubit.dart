@@ -1,32 +1,24 @@
 import 'dart:async';
 
+import 'package:amit_quiz/model/app_user.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amit_quiz/repository/auth_repository.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   final AuthRepositoryBase _authRepository;
-  late StreamSubscription _authSubscription;
 
   AuthCubit(this._authRepository) : super(AuthInitialState());
 
-  Future<void> init() async {
-    // Just for testing. Allows the splash screen to be shown a few seconds
-    await Future.delayed(const Duration(seconds: 3));
-    _authSubscription = _authRepository.onAuthStateChanged.listen(_authStateChanged);
-  }
-
   Future<void> reset() async => emit(AuthInitialState());
 
-  void _authStateChanged(AuthUser? user) => user == null ? emit(AuthSignedOut()) : emit(AuthSignedIn(user));
+  Future<void> signUp(String email, String password) =>
+      _signIn(_authRepository.signUp(email, password));
 
-  Future<void> createUserWithEmailAndPassword(String email, String password) =>
-      _signIn(_authRepository.createUserWithEmailAndPassword(email, password));
+  Future<void> login(String email, String password) =>
+      _signIn(_authRepository.login(email, password));
 
-  Future<void> signInWithEmailAndPassword(String email, String password) =>
-      _signIn(_authRepository.signInWithEmailAndPassword(email, password));
-
-  Future<void> _signIn(Future<AuthUser?> auxUser) async {
+  Future<void> _signIn(Future<AppUser?> auxUser) async {
     try {
       emit(AuthSigningIn());
       final user = await auxUser;
@@ -43,12 +35,6 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> signOut() async {
     await _authRepository.signOut();
     emit(AuthSignedOut());
-  }
-
-  @override
-  Future<void> close() {
-    _authSubscription.cancel();
-    return super.close();
   }
 }
 
@@ -73,7 +59,7 @@ class AuthSignedOut extends AuthState {}
 class AuthSigningIn extends AuthState {}
 
 class AuthSignedIn extends AuthState {
-  final AuthUser user;
+  final AppUser user;
 
   AuthSignedIn(this.user);
 
