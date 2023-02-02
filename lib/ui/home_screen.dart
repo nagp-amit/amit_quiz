@@ -21,7 +21,6 @@ class HomeScreen extends StatelessWidget {
           )
         ],
       ),
-      drawer: const QuizDrawer(),
       body: const Center(child: CircularProgressIndicator()),
     );
   }
