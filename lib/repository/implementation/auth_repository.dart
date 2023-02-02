@@ -9,9 +9,17 @@ class AuthRepository extends AuthRepositoryBase {
   final FirebaseDataSource _fDataSource = getIt();
 
   @override
-  Future<AppUser?> signUp(String email, String password) async {
+  Future<AppUser?> signUp(String name, String email, String password) async {
     final authResult = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
     if (authResult.user != null) {
+      var uid = authResult.user!.uid;
+      AppUser req = AppUser(
+        id: uid,
+        name: name,
+        email: email,
+        image: 'https://firebasestorage.googleapis.com/v0/b/nagp-amit-quiz.appspot.com/o/user.png?alt=media&token=7476d2b1-a2b6-4c32-b031-befc244eca39'
+      );
+      await _fDataSource.createAppUser(req);
       final appUser = await _fDataSource.getAppUser();
       return appUser;
     } else {
@@ -33,5 +41,12 @@ class AuthRepository extends AuthRepositoryBase {
   @override
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
+  }
+  Future createUser({
+    required String uId,
+    required String name,
+    required String email
+  }) async {
+    
   }
 }

@@ -12,8 +12,8 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> reset() async => emit(AuthInitialState());
 
-  Future<void> signUp(String email, String password) =>
-      _signIn(_authRepository.signUp(email, password));
+  Future<void> signUp(String name, String email, String password) =>
+      _signIn(_authRepository.signUp(name, email, password));
 
   Future<void> login(String email, String password) =>
       _signIn(_authRepository.login(email, password));

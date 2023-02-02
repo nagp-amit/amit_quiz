@@ -24,4 +24,8 @@ class FirebaseDataSource {
     if (snapshot.exists) return AppUser.fromFirebaseMap(snapshot.data()!);
     return null;
   }
+
+  Future<void> createAppUser(AppUser appUser) async {
+    await firestore.collection('users').doc(appUser.id).set(appUser.toFirebaseMap());
+  }
 }

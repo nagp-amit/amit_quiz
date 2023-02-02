@@ -1,3 +1,12 @@
+import 'package:amit_quiz/config/colors.dart';
+import 'package:amit_quiz/constants/app_constants.dart';
+import 'package:amit_quiz/navigation/routes.dart';
+import 'package:amit_quiz/widgets/build_header.dart';
+import 'package:amit_quiz/widgets/build_second_header.dart';
+import 'package:amit_quiz/widgets/default_button.dart';
+import 'package:amit_quiz/widgets/default_text_button.dart';
+import 'package:queen_validators/queen_validators.dart';
+import 'package:amit_quiz/widgets/default_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amit_quiz/cubit/auth_cubit.dart';
@@ -23,53 +32,88 @@ class EmailSignInState extends State<EmailSignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(title: const Text('Login with Email')),
-        body: BlocBuilder<AuthCubit, AuthState>(
+        body: BlocListener<AuthCubit, AuthState>(
+        listener: (context, state) {
+          if (state is AuthSignedIn) {
+            Navigator.pushNamed(context, Routes.home);
+          } else if (state is AuthError) {
+            const snackBar = SnackBar(content: Text("Invalid Login"));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
+        },
+        child: BlocBuilder<AuthCubit, AuthState> (
           builder: (_, state) {
-            return Form(
-              key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+            return Padding(
+              padding: const EdgeInsets.only(top: 30, right: 30, left: 30),
+              child: Form(
+                key: _formKey,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (state is AuthSigningIn) const Center(child: CircularProgressIndicator()),
-                    if (state is AuthError)
-                      Text(
-                        state.message,
-                        style: const TextStyle(color: Colors.red, fontSize: 24),
-                      ),
-                    const SizedBox(height: 8),
-                    TextFormField(
+                    const BuildHeader(title: 'Login'),
+                    sizedBox28,
+                    DefaultTextFormField(
+                      context: context,
+                      hintText: 'Your Email',
                       controller: _emailController,
-                      decoration: const InputDecoration(labelText: 'Email'),
-                      validator: emptyValidator,
+                      type: TextInputType.emailAddress,
+                      validator: qValidator([
+                        IsRequired("Please enter email"),
+                        const IsEmail("Please enter valid email"),
+                      ]),
                     ),
-                    const SizedBox(height: 8),
-                    TextFormField(
+                    sizedBox15,
+                    DefaultTextFormField(
+                      context: context,
+                      hintText: 'Password',
                       controller: _passwordController,
-                      decoration: const InputDecoration(labelText: 'Password'),
-                      validator: emptyValidator,
+                      type: TextInputType.visiblePassword,
+                      isPassword: true,
+                      validator: qValidator([
+                        IsRequired("Please enter password"),
+                      ]),
                     ),
-                    const SizedBox(height: 8),
-                    Center(
-                      child: ElevatedButton(
-                        child: const Text('Login'),
-                        onPressed: () {
-                          if (_formKey.currentState?.validate() == true) {
-                            context.read<AuthCubit>().login(
-                                  _emailController.text,
-                                  _passwordController.text,
-                                );
-                          }
-                        },
-                      ),
+                    sizedBox15,
+                    DefaultButton(
+                      title: "Login",
+                      onPressed: () {
+                        if (_formKey.currentState?.validate() == true) {
+                          context.read<AuthCubit>().login(
+                                _emailController.text,
+                                _passwordController.text,
+                              );
+                        }
+                      }
                     ),
+                    sizedBox15,
+                    DefaultTextButton(
+                      child: 'Forgot your Password?',
+                      color: secondaryFontColor,
+                      fontWeight: FontWeight.w400,
+                      onPressed: () {},
+                    ),
+                    sizedBox28,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const BuildSecondHeader(
+                            title: 'Don\'t have an Account?'),
+                        DefaultTextButton(
+                          child: 'Sign Up',
+                          onPressed: () {
+                            Navigator.pushNamed(context, Routes.createAccount);
+                          },
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),
             );
-          },
-        ));
+          }
+        )
+    ));
   }
 }
