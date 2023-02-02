@@ -9,7 +9,7 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(seconds: 5), () => Navigator.of(context).pushReplacementNamed('/signInEmail'));
+    Timer(const Duration(seconds: 2), () => Navigator.of(context).pushReplacementNamed('/signInEmail'));
     return Scaffold(
       body: Center(
         child: Column(

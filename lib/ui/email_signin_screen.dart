@@ -25,15 +25,10 @@ class EmailSignInState extends State<EmailSignIn> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
-  String? emptyValidator(String? value) {
-    return (value == null || value.isEmpty) ? 'This is a required field' : null;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(title: const Text('Login with Email')),
         body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is AuthSignedIn) {

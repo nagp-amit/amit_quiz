@@ -29,7 +29,6 @@ class EmailCreateState extends State<EmailCreate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Create account')),
         body: BlocBuilder<AuthCubit, AuthState>(
           builder: (_, state) {
             return Form(
