@@ -13,6 +13,7 @@ final getIt = GetIt.instance;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await injectDependencies();
 
   final authCubit = AuthCubit(AuthRepository());
 
