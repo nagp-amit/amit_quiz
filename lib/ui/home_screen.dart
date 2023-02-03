@@ -1,6 +1,7 @@
 import 'package:amit_quiz/cubit/category_cubit.dart';
 import 'package:amit_quiz/cubit/states.dart';
 import 'package:amit_quiz/widgets/card_item.dart';
+import 'package:amit_quiz/widgets/default_appbar.dart';
 import 'package:amit_quiz/widgets/quiz_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,15 +20,9 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Page'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            tooltip: 'Logout',
-            onPressed: () => context.read<AuthCubit>().signOut(),
-          )
-        ],
+      appBar: DefaultAppBar(
+        title: 'Quiz App',
+        context: context,
       ),
       drawer: const QuizDrawer(),
       body: BlocBuilder<CategoryCubit, AppStates>(
