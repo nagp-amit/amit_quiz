@@ -1,3 +1,4 @@
+import 'package:amit_quiz/constants/app_constants.dart';
 import 'package:amit_quiz/data_source/firebase_data_source.dart';
 import 'package:amit_quiz/main.dart';
 import 'package:amit_quiz/model/app_user.dart';
@@ -17,7 +18,7 @@ class AuthRepository extends AuthRepositoryBase {
         id: uid,
         name: name,
         email: email,
-        image: 'https://firebasestorage.googleapis.com/v0/b/nagp-amit-quiz.appspot.com/o/user.png?alt=media&token=7476d2b1-a2b6-4c32-b031-befc244eca39'
+        image: defaultImageUrl
       );
       await _fDataSource.createAppUser(req);
       final appUser = await _fDataSource.getAppUser();
