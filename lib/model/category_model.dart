@@ -10,9 +10,9 @@ class CategoryModel {
   });
 
    CategoryModel.fromFirebaseMap(Map<String, Object?> data)
-      : id = data['id'] as String,
-        name = data['name'] as String,
-        image = data['image'] as String;
+      : id = (data['id'] ?? '').toString(),
+        name = (data['name'] ?? '').toString(),
+        image = (data['image'] ?? '').toString();
 
   // Helper function to convert this MyUser to a Map
   Map<String, Object?> toFirebaseMap() {
