@@ -9,9 +9,10 @@ class CategoryRepository extends CategoryRepositoryBase {
 
   @override
   Future<List<CategoryModel>> getCategories() async {
-    var result = await _fDataSource.getAll(collectionName);
+    var result = await _fDataSource.firestore.collection(collectionName).get();
+
     List<CategoryModel> categories = [];
-    for (var element in result) {
+    for (var element in result.docs) {
         categories.add(CategoryModel.fromJson(element.data()));
     }
     return categories;

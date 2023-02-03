@@ -28,9 +28,4 @@ class FirebaseDataSource {
   Future<void> createAppUser(AppUser appUser) async {
     await firestore.collection('users').doc(appUser.id).set(appUser.toFirebaseMap());
   }
-
-  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>> > getAll(collectionName) async {
-    var result = await firestore.collection(collectionName).get();
-    return result.docs;
-  }
 }
