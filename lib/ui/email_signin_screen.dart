@@ -1,5 +1,6 @@
 import 'package:amit_quiz/config/colors.dart';
 import 'package:amit_quiz/constants/app_constants.dart';
+import 'package:amit_quiz/cubit/states.dart';
 import 'package:amit_quiz/navigation/routes.dart';
 import 'package:amit_quiz/widgets/build_header.dart';
 import 'package:amit_quiz/widgets/build_second_header.dart';
@@ -29,7 +30,7 @@ class EmailSignInState extends State<EmailSignIn> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        body: BlocListener<AuthCubit, AuthState>(
+        body: BlocListener<AuthCubit, AppStates>(
         listener: (context, state) {
           if (state is AuthSignedIn) {
             Navigator.pushNamed(context, Routes.home);
@@ -38,7 +39,7 @@ class EmailSignInState extends State<EmailSignIn> {
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
           }
         },
-        child: BlocBuilder<AuthCubit, AuthState> (
+        child: BlocBuilder<AuthCubit, AppStates> (
           builder: (_, state) {
             return Padding(
               padding: const EdgeInsets.only(top: 30, right: 30, left: 30),

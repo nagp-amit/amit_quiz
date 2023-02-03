@@ -1,5 +1,6 @@
 import 'package:amit_quiz/config/colors.dart';
 import 'package:amit_quiz/constants/app_constants.dart';
+import 'package:amit_quiz/cubit/states.dart';
 import 'package:amit_quiz/widgets/build_header.dart';
 import 'package:amit_quiz/widgets/build_second_header.dart';
 import 'package:amit_quiz/widgets/default_button.dart';
@@ -29,7 +30,7 @@ class EmailCreateState extends State<EmailCreate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: BlocBuilder<AuthCubit, AuthState>(
+        body: BlocBuilder<AuthCubit, AppStates>(
           builder: (_, state) {
             return Form(
               key: _formKey,

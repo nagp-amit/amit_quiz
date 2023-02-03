@@ -1,4 +1,5 @@
 import 'package:amit_quiz/cubit/auth_cubit.dart';
+import 'package:amit_quiz/cubit/states.dart';
 import 'package:flutter/material.dart';
 import 'package:amit_quiz/config/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,7 +47,7 @@ class BuildDrawerHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthCubit, AuthState>(
+    return BlocConsumer<AuthCubit, AppStates>(
       listener: (context, state) {},
       builder: (context, state) {
         if (state is AuthSignedIn) {

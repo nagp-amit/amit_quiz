@@ -1,3 +1,6 @@
+import 'package:amit_quiz/repository/auth_repository.dart';
+import 'package:amit_quiz/repository/category_repository.dart';
+import 'package:amit_quiz/repository/implementation/category_repository.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,6 +35,6 @@ Future<void> injectDependencies() async {
 
   // Inject the Repositories. Note that the type is the abstract class
   // and the injected instance is the implementation.
-  getIt.registerLazySingleton<AuthRepository>(() => AuthRepository());
-  // getIt.registerLazySingleton<MyUserRepository>(() => MyUserRepositoryImp());
+  getIt.registerLazySingleton<AuthRepositoryBase>(() => AuthRepository());
+  getIt.registerLazySingleton<CategoryRepositoryBase>(() => CategoryRepository());
 }

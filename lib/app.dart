@@ -1,3 +1,4 @@
+import 'package:amit_quiz/cubit/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amit_quiz/cubit/auth_cubit.dart';
@@ -9,7 +10,7 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   static Widget create() {
-    return BlocListener<AuthCubit, AuthState>(
+    return BlocListener<AuthCubit, AppStates>(
       listener: (context, state) {
         if (state is AuthSignedOut) {
           _navigatorKey.currentState?.pushNamedAndRemoveUntil(Routes.signInEmail, (r) => false);
