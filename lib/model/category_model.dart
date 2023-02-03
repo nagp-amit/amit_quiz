@@ -1,7 +1,7 @@
 class CategoryModel {
-  late String id;
-  late String name;
-  late String image;
+  final String id;
+  final String name;
+  final String image;
 
   CategoryModel({
     required this.id, 
@@ -9,17 +9,17 @@ class CategoryModel {
     required this.image
   });
 
-  CategoryModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    image = json['image'];
-  }
+   CategoryModel.fromFirebaseMap(Map<String, Object?> data)
+      : id = data['id'] as String,
+        name = data['name'] as String,
+        image = data['image'] as String;
 
-  Map<String, dynamic> toMap() {
-    return {
-      'name': name,
+  // Helper function to convert this MyUser to a Map
+  Map<String, Object?> toFirebaseMap() {
+    return <String, Object?>{
       'id': id,
-      'image': image
+      'name': name,
+      'image': image,
     };
   }
 }
