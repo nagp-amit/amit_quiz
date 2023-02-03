@@ -5,7 +5,6 @@ import 'package:amit_quiz/widgets/default_appbar.dart';
 import 'package:amit_quiz/widgets/quiz_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:amit_quiz/cubit/auth_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
