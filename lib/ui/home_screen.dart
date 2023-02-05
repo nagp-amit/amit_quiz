@@ -16,16 +16,16 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Quiz App')),
+        appBar: AppBar(title: const Text('Quiz App'), backgroundColor: mainColor.shade800,),
         drawer: const QuizDrawer(),
         body: DefaultTabController(
           length: 2,
           child: Scaffold(
-            appBar: const TabBar(
+            appBar: TabBar(
               indicatorColor: mainColor,
               tabs: [
-                Tab(text: "Quiz"),
-                Tab(text: "Result"),
+                Tab(child: Text("Quiz", style: TextStyle(color: mainColor.shade800),)),
+                Tab(child: Text("Result", style: TextStyle(color: mainColor.shade800),)),,
               ],
             ),
             body: BlocBuilder<CategoryCubit, AppStates>(

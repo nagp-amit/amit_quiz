@@ -26,7 +26,7 @@ void main() async {
   runApp(
     MultiBlocProvider(providers: [
       BlocProvider(create: (BuildContext context) => AuthCubit(AuthRepository())),
-      BlocProvider(create: (BuildContext context) => CategoryCubit()),
+      BlocProvider(create: (BuildContext context) => CategoryCubit()..getCategories()),
       BlocProvider(create: (BuildContext context) => QuestionCubit()),
       BlocProvider(create: (BuildContext context) => QuizCubit()),
     ], child: MyApp.create())
