@@ -16,16 +16,20 @@ class QuizScreen extends StatelessWidget {
   const QuizScreen({Key? key}) : super(key: key);
 
   static Widget create(BuildContext context) {
+    final selectedCategory =
+        ModalRoute.of(context)?.settings.arguments as CategoryModel?;
+    int categoryId = selectedCategory == null ? 1 : selectedCategory.id;
+
     return BlocProvider(
-      create: (_) => QuestionCubit()..getQuestions("1"),
+      create: (_) => QuestionCubit()..getQuestions(categoryId),
       child: const QuizScreen(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final selectedCategory =
-        ModalRoute.of(context)?.settings.arguments as CategoryModel;
+  final selectedCategory =
+        ModalRoute.of(context)?.settings.arguments as CategoryModel?;
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -36,7 +40,7 @@ class QuizScreen extends StatelessWidget {
             shape:
                 StadiumBorder(side: BorderSide(color: Colors.white, width: 2)),
           ),
-          child: Text(selectedCategory.name),
+          child: Text(selectedCategory?.name ?? ''),
         ),
         showActionIcon: true,
         titleWidget: const Text(

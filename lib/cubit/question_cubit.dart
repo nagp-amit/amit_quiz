@@ -9,7 +9,7 @@ class QuestionCubit extends Cubit<AppStates> {
 
   QuestionCubit() : super(AppInitialState());
 
-  Future<void> getQuestions(String categoryId) async {
+  Future<void> getQuestions(int categoryId) async {
     try {
       final questions = await _questionRepository.getQuestions(categoryId);
       emit(QuizIndexState(currentIndex: 0));
