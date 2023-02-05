@@ -97,7 +97,8 @@ class QuizProgressState extends QuizState {
   QuizProgressState(String questionId, int answer) {
     answeredQuestions[questionId] = answer;
   }
-  QuizProgressState.fromQuizProgressState() {
+  QuizProgressState.toClear() {
     answeredQuestions.clear();
   }
+  QuizProgressState.toSubmit();
 }

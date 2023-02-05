@@ -17,6 +17,7 @@ class QuizScreen extends StatelessWidget {
     final selectedCategory =
         ModalRoute.of(context)?.settings.arguments as CategoryModel?;
     int categoryId = selectedCategory == null ? 1 : selectedCategory.id;
+    context.read<QuizCubit>().resetProgress();
     context.read<QuestionCubit>().getQuestions(categoryId);
     return const QuizScreen();
   }
@@ -54,17 +55,21 @@ class QuizScreen extends StatelessWidget {
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(selectedCategory?.name ?? '')
+                              Text(selectedCategory?.name ?? ''),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * .35,
+                                child: DefaultButton(
+                                  title: 'End Quiz',
+                                  color: mainColor,
+                                  onPressed: () {
+                                    context.read<QuizCubit>().submitQuiz();
+                                    Navigator.pushNamed(context, Routes.result);
+                                  },
+                                  textColor: Colors.white,
+                                ),
+                              )
                               // Text('Questions: ${selectedPageIndex + 1}/${widget.quizData!.questionRef!.length}', style: boldTextStyle(color: white, size: 20)),
                             ]),
-                        DefaultButton(
-                          title: 'End Quiz',
-                          color: mainColor,
-                          onPressed: () {
-                            Navigator.pushNamed(context, Routes.result);
-                          },
-                          textColor: Colors.white,
-                        )
                       ],
                     ),
                   ),
@@ -115,7 +120,7 @@ class QuizBody extends StatelessWidget {
               children: [
                 QuizQuestionComponent(question: currentQuestion),
                 Visibility(
-                  visible: state.currentIndex < questions.length,
+                  visible: state.currentIndex < questions.length - 1,
                   child: DefaultButton(
                     onPressed: () {
                       context
@@ -135,65 +140,53 @@ class QuizBody extends StatelessWidget {
   }
 }
 
-//ignore: must_be_immutable
-class QuizQuestionComponent extends StatefulWidget {
-  int _selectedOptionIndex = -1;
-  final QuestionModel? question;
-
-  QuizQuestionComponent({super.key, this.question});
-
-  @override
-  QuizQuestionComponentState createState() => QuizQuestionComponentState();
-}
-
-class QuizQuestionComponentState extends State<QuizQuestionComponent> {
-  @override
-  void initState() {
-    super.initState();
-    init();
-  }
-
-  Future<void> init() async {
-    //
-  }
-
-  @override
-  void setState(fn) {
-    if (mounted) super.setState(fn);
-  }
-
+class QuizQuestionComponent extends StatelessWidget {
+  final QuestionModel question;
+  const QuizQuestionComponent({super.key, required this.question});
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text('addQuestion', textAlign: TextAlign.center),
-        Column(
-          children: List.generate(widget.question!.answers.length, (index) {
-            String mData = widget.question!.answers[index].value;
-            return InkWell(
-                onTap: () {
-                  setState(() {
-                    widget._selectedOptionIndex = index;
-                  });
-                  context.read<QuizCubit>().saveQuizProgress(
-                      widget.question!.id, widget.question!.answers[index].id);
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  width: MediaQuery.of(context).size.width,
-                  margin: const EdgeInsets.only(bottom: 16),
-                  decoration: boxDecorationWithRoundedCorners(
-                    backgroundColor: widget._selectedOptionIndex == index
-                        ? mainColor.shade500
-                        : const Color(0xFF090909),
-                  ),
-                  child: Text(mData),
-                ));
-          }),
-        ),
-      ],
-    );
+    return BlocConsumer<QuizCubit, QuizState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          if (state is QuizProgressState) {
+            var selectedAnswer = state.answeredQuestions[question.id];
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  question.title,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontSize: 24.0, fontWeight: FontWeight.w500),
+                ),
+                Column(
+                  children: List.generate(question.answers.length, (index) {
+                    String mData = question.answers[index].value;
+                    return InkWell(
+                        onTap: () {
+                          context.read<QuizCubit>().saveQuizProgress(
+                              question.id, question.answers[index].id);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(16),
+                          width: MediaQuery.of(context).size.width,
+                          margin: const EdgeInsets.only(bottom: 16),
+                          decoration: boxDecorationWithRoundedCorners(
+                            borderRadius: BorderRadius.circular(12.0),
+                            backgroundColor:
+                                selectedAnswer == question.answers[index].id
+                                    ? mainColor.shade800.withOpacity(0.5)
+                                    : const Color(0xFFf3f5f9),
+                          ),
+                          child: Text(mData),
+                        ));
+                  }),
+                ),
+              ],
+            );
+          }
+          return const Center(child: CircularProgressIndicator());
+        });
   }
 }
 

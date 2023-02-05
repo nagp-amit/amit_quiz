@@ -40,7 +40,7 @@ class ResultScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 20, bottom: 5),
                           child: Text(
-                            '${state.answeredQuestions.length} Congratulations',
+                            'Congratulations',
                             style: TextStyle(color: mainColor.shade800),
                           ),
                         ),
@@ -58,6 +58,79 @@ class ResultScreen extends StatelessWidget {
                         const SizedBox(
                           height: 25,
                         ),
+                       Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  child: Container(
+                                    width: 70,
+                                    height: 70,
+                                    color: mainColor.shade700,
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: const [
+                                        Text('Total', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                        Text('10', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                      ],
+                                    )
+                                  ),
+                                ),
+                                ClipRRect(
+                                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  child: Container(
+                                    width: 70,
+                                    height: 70,
+                                    color: const Color.fromARGB(255, 11, 163, 16),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: const [
+                                        Text('Correct', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                        Text('10', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                      ],
+                                    )
+                                  ),
+                                ),
+                                ClipRRect(
+                                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  child: Container(
+                                    width: 70,
+                                    height: 70,
+                                    color: const Color.fromARGB(255, 253, 51, 36),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: const [
+                                        Text('Wring', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                        Text('10', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                      ],
+                                    )
+                                  ),
+                                ),
+                                ClipRRect(
+                                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  child: Container(
+                                    width: 70,
+                                    height: 70,
+                                    color: const Color.fromARGB(255, 239, 244, 92),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: const [
+                                        Text('UnAnswered', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                        Text('10', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                      ],
+                                    )
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        )
                       ],
                     )),
                   ),

@@ -16,10 +16,11 @@ class QuizCubit extends Cubit<QuizState> {
   }
 
   void resetProgress() {
-    emit(QuizProgressState.fromQuizProgressState());
+    emit(QuizIndexState(currentIndex: 0));
+    emit(QuizProgressState.toClear());
   }
 
-  void submitQuiz(String questionId, int ans) {
-
+  void submitQuiz() {
+    emit(QuizProgressState.toSubmit());
   }
 }
