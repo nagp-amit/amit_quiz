@@ -1,8 +1,8 @@
+import 'package:amit_quiz/config/colors.dart';
 import 'package:amit_quiz/cubit/category_cubit.dart';
 import 'package:amit_quiz/cubit/states.dart';
 import 'package:amit_quiz/navigation/routes.dart';
 import 'package:amit_quiz/widgets/card_item.dart';
-import 'package:amit_quiz/widgets/default_appbar.dart';
 import 'package:amit_quiz/widgets/error_state_card.dart';
 import 'package:amit_quiz/widgets/quiz_drawer.dart';
 import 'package:flutter/material.dart';
@@ -20,68 +20,75 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      initialIndex: 0,
-      child: Scaffold(
-        appBar: DefaultAppBar(
-          title: 'Quiz App',
-          context: context,
-        ),
+    return Scaffold(
+        appBar: AppBar(title: const Text('Quiz App')),
         drawer: const QuizDrawer(),
-        body: BlocBuilder<CategoryCubit, AppStates>(
-          builder: (_, state) {
-            if (state is GetCategorySuccessState) {
-              return TabBarView(children: [
-                Expanded(
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                    ),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          ListView.builder(
-                            itemCount: state.categories.length,
-                            physics: const ClampingScrollPhysics(),
-                            shrinkWrap: true,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom: 10, right: 10, left: 10),
-                                child: InkWell(
-                                    onTap: () => {
-                                      Navigator.pushNamed(context, Routes.quiz, arguments: state.categories[index])
-                                    },
-                                    child: CardItem(
-                                      category: state.categories[index],
-                                    )),
-                              );
-                            },
-                          )
-                        ],
+        body: DefaultTabController(
+          length: 2,
+          child: Scaffold(
+            appBar: const TabBar(
+              indicatorColor: mainColor,
+              tabs: [
+                Tab(text: "Quiz"),
+                Tab(text: "Result"),
+              ],
+            ),
+            body: BlocBuilder<CategoryCubit, AppStates>(
+              builder: (_, state) {
+                if (state is GetCategorySuccessState) {
+                  return TabBarView(children: [
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 10),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              ListView.builder(
+                                itemCount: state.categories.length,
+                                physics: const ClampingScrollPhysics(),
+                                shrinkWrap: true,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 10, right: 10, left: 10),
+                                    child: InkWell(
+                                        onTap: () => {
+                                              Navigator.pushNamed(
+                                                  context, Routes.quiz,
+                                                  arguments:
+                                                      state.categories[index])
+                                            },
+                                        child: CardItem(
+                                          category: state.categories[index],
+                                        )),
+                                  );
+                                },
+                              )
+                            ],
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                Container(
-                  //for third tab
-                  height: 400,
-                  color: Colors.blue,
-                )
-              ]);
-            }
-            if (state is GetCategoryErrorState) {
-              return ErrorStateCard(errorText: state.error);
-            }
-            return const Center(child: CircularProgressIndicator());
-          },
-        ),
-      ),
-    );
+                    Container(
+                      //for third tab
+                      height: 400,
+                      color: Colors.blue,
+                    )
+                  ]);
+                }
+                if (state is GetCategoryErrorState) {
+                  return ErrorStateCard(errorText: state.error);
+                }
+                return const Center(child: CircularProgressIndicator());
+              },
+            ),
+          ),
+        ));
   }
 }
