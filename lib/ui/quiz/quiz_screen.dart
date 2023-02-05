@@ -40,7 +40,7 @@ class QuizScreen extends StatelessWidget {
             shape:
                 StadiumBorder(side: BorderSide(color: Colors.white, width: 2)),
           ),
-          child: Text(selectedCategory?.name ?? ''),
+          child: Text(selectedCategory?.name ?? 'Apppp'),
         ),
         showActionIcon: true,
         titleWidget: const Text(

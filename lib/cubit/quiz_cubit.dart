@@ -7,6 +7,7 @@ class QuizCubit extends Cubit<QuizState> {
   QuizCubit() : super(QuizIndexState(currentIndex: 0));
 
   void updateQuizIndex(currentIndex) {
+    emit(NextQuestionLoading());
     emit(QuizIndexState(currentIndex: currentIndex + 1));
   }
 }

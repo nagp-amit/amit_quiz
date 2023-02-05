@@ -16,19 +16,19 @@ class Routes {
   static Route routes(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case splash:
-        return _buildRoute(SplashScreen.create);
+        return _buildRoute(routeSettings, SplashScreen.create);
       case home:
-        return _buildRoute(HomeScreen.create);
+        return _buildRoute(routeSettings, HomeScreen.create);
       case createAccount:
-        return _buildRoute(EmailCreate.create);
+        return _buildRoute(routeSettings, EmailCreate.create);
       case signInEmail:
-        return _buildRoute(EmailSignIn.create);
+        return _buildRoute(routeSettings, EmailSignIn.create);
       case quiz:
-        return _buildRoute(QuizScreen.create);
+        return _buildRoute(routeSettings, QuizScreen.create);
       default:
         throw Exception('Route does not exists');
     }
   }
 
-  static MaterialPageRoute _buildRoute(Function build) => MaterialPageRoute(builder: (context) => build(context));
+  static MaterialPageRoute _buildRoute(RouteSettings routeSettings, Function build) => MaterialPageRoute(builder: (context) => build(context), settings: routeSettings);
 }

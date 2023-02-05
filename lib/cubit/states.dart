@@ -81,6 +81,8 @@ abstract class QuizState extends Equatable {
   List<Object?> get props => [];
 }
 
+class NextQuestionLoading extends QuizState {}
+
 
 // Auth State
 class QuizIndexState extends QuizState {
