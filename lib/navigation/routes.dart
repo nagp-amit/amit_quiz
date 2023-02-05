@@ -12,7 +12,6 @@ class Routes {
   static const signInEmail = '/signInEmail';
   static const home = '/home';
   static const quiz = '/quiz';
-  static const result = '/result';
 
   static Route routes(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -25,8 +24,6 @@ class Routes {
       case signInEmail:
         return _buildRoute(routeSettings, EmailSignIn.create);
       case quiz:
-        return _buildRoute(routeSettings, QuizScreen.create);
-      case result:
         return _buildRoute(routeSettings, QuizScreen.create);
       default:
         throw Exception('Route does not exists');

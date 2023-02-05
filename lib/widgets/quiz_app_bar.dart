@@ -1,4 +1,3 @@
-import 'package:amit_quiz/navigation/routes.dart';
 import 'package:flutter/material.dart';
 
 class QuizAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -37,14 +36,12 @@ class QuizAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  IconButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            Routes.home, (Route<dynamic> route) => false);
-                      },
-                      icon: const Icon(Icons.home, color: Colors.white))
+                  leading ??
+                      Transform.translate(
+                          offset: const Offset(-14, 0),
+                          child: const BackButton()),
                 ],
               ),
             ],
