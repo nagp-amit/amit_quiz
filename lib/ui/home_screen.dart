@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
               indicatorColor: mainColor,
               tabs: [
                 Tab(child: Text("Quiz", style: TextStyle(color: mainColor.shade800),)),
-                Tab(child: Text("Result", style: TextStyle(color: mainColor.shade800),)),,
+                Tab(child: Text("Result", style: TextStyle(color: mainColor.shade800),)),
               ],
             ),
             body: BlocBuilder<CategoryCubit, AppStates>(
