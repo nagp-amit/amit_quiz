@@ -61,13 +61,14 @@ class ResultScreen extends StatelessWidget {
                        Column(
                           children: [
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              
                               children: [
                                 ClipRRect(
                                   borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Container(
-                                    width: 70,
+                                    width: 75,
                                     height: 70,
                                     color: mainColor.shade700,
                                     child: Column(
@@ -83,7 +84,7 @@ class ResultScreen extends StatelessWidget {
                                   borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Container(
-                                    width: 70,
+                                    width: 75,
                                     height: 70,
                                     color: const Color.fromARGB(255, 11, 163, 16),
                                     child: Column(
@@ -99,13 +100,13 @@ class ResultScreen extends StatelessWidget {
                                   borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Container(
-                                    width: 70,
+                                    width: 75,
                                     height: 70,
                                     color: const Color.fromARGB(255, 253, 51, 36),
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: const [
-                                        Text('Wring', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                        Text('Wrong', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                                         Text('10', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                                       ],
                                     )
@@ -115,9 +116,9 @@ class ResultScreen extends StatelessWidget {
                                   borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Container(
-                                    width: 70,
+                                    width: 95,
                                     height: 70,
-                                    color: const Color.fromARGB(255, 239, 244, 92),
+                                    color: const Color.fromARGB(255, 162, 130, 12),
                                     child: Column(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: const [
