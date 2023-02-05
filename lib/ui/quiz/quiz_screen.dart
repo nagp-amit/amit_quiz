@@ -29,58 +29,61 @@ class QuizScreen extends StatelessWidget {
       child: Scaffold(
         body: BlocBuilder<QuestionCubit, AppStates>(builder: (_, state) {
           if (state is GetQuestionSuccessState) {
-            return Stack(
-              alignment: AlignmentDirectional.topCenter,
-              children: [
-                Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.30,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [mainColor.shade800, mainColor.shade300],
-                        begin: AlignmentDirectional.centerStart,
-                        end: AlignmentDirectional.centerEnd,
-                      ),
-                    )),
-                Positioned(
-                  top: 50,
-                  left: 16,
-                  right: 16,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(selectedCategory?.name ?? '')
-                            // Text('Questions: ${selectedPageIndex + 1}/${widget.quizData!.questionRef!.length}', style: boldTextStyle(color: white, size: 20)),
-                          ]),
-                      DefaultButton(
-                        title: 'End Quiz',
-                        color: mainColor,
-                        onPressed: () {
-                          Navigator.pushNamed(context, Routes.result);
-                        },
-                        textColor: Colors.white,
-                      )
-                    ],
+            return SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: Stack(
+                alignment: AlignmentDirectional.topCenter,
+                children: [
+                  Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.30,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [mainColor.shade800, mainColor.shade300],
+                          begin: AlignmentDirectional.centerStart,
+                          end: AlignmentDirectional.centerEnd,
+                        ),
+                      )),
+                  Positioned(
+                    top: 50,
+                    left: 16,
+                    right: 16,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(selectedCategory?.name ?? '')
+                              // Text('Questions: ${selectedPageIndex + 1}/${widget.quizData!.questionRef!.length}', style: boldTextStyle(color: white, size: 20)),
+                            ]),
+                        DefaultButton(
+                          title: 'End Quiz',
+                          color: mainColor,
+                          onPressed: () {
+                            Navigator.pushNamed(context, Routes.result);
+                          },
+                          textColor: Colors.white,
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                Positioned(
-                  left: 16,
-                  right: 16,
-                  bottom: 16,
-                  top: MediaQuery.of(context).size.height * 0.20,
-                  child: Container(
-                    padding: const EdgeInsets.all(30),
-                    decoration: boxDecorationWithRoundedCorners(
-                        borderRadius: BorderRadius.circular(12.0)),
-                    child: PageView(
-                        physics: const NeverScrollableScrollPhysics(),
-                        children: [QuizBody(questions: state.questions)]),
-                  ),
-                )
-              ],
+                  Positioned(
+                    left: 16,
+                    right: 16,
+                    bottom: 16,
+                    top: MediaQuery.of(context).size.height * 0.20,
+                    child: Container(
+                      padding: const EdgeInsets.all(30),
+                      decoration: boxDecorationWithRoundedCorners(
+                          borderRadius: BorderRadius.circular(12.0)),
+                      child: PageView(
+                          physics: const NeverScrollableScrollPhysics(),
+                          children: [QuizBody(questions: state.questions)]),
+                    ),
+                  )
+                ],
+              ),
             );
           }
           if (state is GetQuestionErrorState) {
