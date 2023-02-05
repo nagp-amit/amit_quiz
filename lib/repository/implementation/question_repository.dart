@@ -9,7 +9,7 @@ class QuestionRepository extends QuestionRepositoryBase {
 
   @override
   Future<List<QuestionModel>> getQuestions(int categoryId) async {
-    var result = await _fDataSource.firestore.collection(collectionName).where("categoryId", isEqualTo: categoryId).get();
+    var result = await _fDataSource.firestore.collection(collectionName).where("categoryId", isEqualTo: categoryId).limit(10).get();
 
     List<QuestionModel> questions = [];
     for (var element in result.docs) {

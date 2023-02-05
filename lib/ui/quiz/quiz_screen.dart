@@ -3,6 +3,7 @@ import 'package:amit_quiz/cubit/quiz_cubit.dart';
 import 'package:amit_quiz/cubit/states.dart';
 import 'package:amit_quiz/model/category_model.dart';
 import 'package:amit_quiz/model/question_model.dart';
+import 'package:amit_quiz/navigation/routes.dart';
 import 'package:amit_quiz/widgets/answer_card.dart';
 import 'package:amit_quiz/widgets/content_area.dart';
 import 'package:amit_quiz/widgets/default_button.dart';
@@ -37,14 +38,8 @@ class QuizScreen extends StatelessWidget {
             shape:
                 StadiumBorder(side: BorderSide(color: Colors.white, width: 2)),
           ),
-          child: Text(selectedCategory?.name ?? 'Apppp'),
-        ),
-        showActionIcon: true,
-        titleWidget: const Text(
-          'Q. ',
-          style: TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
-        ),
+          child: Text(selectedCategory?.name ?? ''),
+        )
       ),
       body: BlocBuilder<QuestionCubit, AppStates>(
         builder: (_, state) {
@@ -104,8 +99,10 @@ class QuizBody extends StatelessWidget {
                         final answer = currentQuestion.answers[index];
                         return AnswerCard(
                           isSelected: false,
-                          onTap: () {},
-                          answer: '${answer.id}. ${answer.value}',
+                          onTap: () {
+                            context.read<QuizCubit>().saveQuizProgress(currentQuestion.id, answer.id);
+                          },
+                          answer: '${answer.id}.  ${answer.value}',
                         );
                       },
                     ),
@@ -137,28 +134,24 @@ class QuizFooter extends StatelessWidget {
               padding: const EdgeInsets.all(25.0),
               child: Row(
                 children: [
-                  Visibility(
-                    visible: true,
-                    child: Padding(
+                  Padding(
                       padding: const EdgeInsets.only(right: 5.0),
-                      child: SizedBox(
-                        height: 55,
-                        width: 55,
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.arrow_back_ios_new),
-                        ),
-                      ),
+                      child: DefaultButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                            Routes.result, (Route<dynamic> route) => false);
+                        },
+                        title: "Submit"
+                      )
                     ),
-                  ),
                   Expanded(
                     child: Visibility(
-                      visible: true,
+                      visible: state.currentIndex < questions.length,
                       child: DefaultButton(
                         onPressed: () {
                           context.read<QuizCubit>().updateQuizIndex(state.currentIndex);
                         },
-                        title: '${state.currentIndex} Next',
+                        title: 'Next',
                       ),
                     ),
                   )
