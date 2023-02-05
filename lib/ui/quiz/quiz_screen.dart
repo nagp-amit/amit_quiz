@@ -29,9 +29,10 @@ class QuizScreen extends StatelessWidget {
       child: Scaffold(
         body: BlocBuilder<QuestionCubit, AppStates>(builder: (_, state) {
           if (state is GetQuestionSuccessState) {
-            return Stack(
+            return Container(
+              height: MediaQuery.of(context).size.height,
               alignment: AlignmentDirectional.topCenter,
-              children: [
+              child: Column(children: [
                 Container(
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height * 0.30,
@@ -41,7 +42,8 @@ class QuizScreen extends StatelessWidget {
                         begin: AlignmentDirectional.centerStart,
                         end: AlignmentDirectional.centerEnd,
                       ),
-                    )),
+                    )
+                ),
                 Positioned(
                   top: 50,
                   left: 16,
@@ -52,17 +54,20 @@ class QuizScreen extends StatelessWidget {
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(selectedCategory?.name ?? '')
+                            Text(selectedCategory?.name ?? ''),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.3,
+                              child: DefaultButton(
+                                title: 'End Quiz',
+                                color: Colors.white,
+                                onPressed: () {
+                                  Navigator.pushNamed(context, Routes.result);
+                                },
+                                textColor: mainColor,
+                              ),
+                            )
                             // Text('Questions: ${selectedPageIndex + 1}/${widget.quizData!.questionRef!.length}', style: boldTextStyle(color: white, size: 20)),
                           ]),
-                      DefaultButton(
-                        title: 'End Quiz',
-                        color: mainColor,
-                        onPressed: () {
-                          Navigator.pushNamed(context, Routes.result);
-                        },
-                        textColor: Colors.white,
-                      )
                     ],
                   ),
                 ),
@@ -81,7 +86,7 @@ class QuizScreen extends StatelessWidget {
                   ),
                 )
               ],
-            );
+            ));
           }
           if (state is GetQuestionErrorState) {
             return ErrorStateCard(errorText: state.error);
