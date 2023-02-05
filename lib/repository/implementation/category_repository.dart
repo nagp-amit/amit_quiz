@@ -13,7 +13,7 @@ class CategoryRepository extends CategoryRepositoryBase {
 
     List<CategoryModel> categories = [];
     for (var element in result.docs) {
-        categories.add(CategoryModel.fromFirebaseMap(element.id, element.data()));
+        categories.add(CategoryModel.fromFirebaseMap(int.parse(element.id), element.data()));
     }
     return categories;
   }

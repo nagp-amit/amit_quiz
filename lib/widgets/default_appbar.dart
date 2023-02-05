@@ -1,4 +1,5 @@
 
+import 'package:amit_quiz/config/colors.dart';
 import 'package:flutter/material.dart';
 
 class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -25,8 +26,9 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
       iconTheme: IconThemeData(color: iconColor),
       backgroundColor: backgroundColor,
       elevation: elevation,
-      title: Text(title),
-      bottom: const TabBar(tabs: [
+      bottom: const TabBar(
+        indicatorColor: mainColor,
+        tabs: [
         Tab(text: "Quiz"),
         Tab(text: "Result"),
       ],)

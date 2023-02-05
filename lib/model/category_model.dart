@@ -1,5 +1,5 @@
 class CategoryModel {
-  final String id;
+  final int id;
   final String name;
   final String image;
 
@@ -12,13 +12,4 @@ class CategoryModel {
    CategoryModel.fromFirebaseMap(this.id, Map<String, Object?> data)
       : name = (data['name'] ?? '').toString(),
         image = (data['image'] ?? '').toString();
-
-  // Helper function to convert this MyUser to a Map
-  Map<String, Object?> toFirebaseMap() {
-    return <String, Object?>{
-      'id': id,
-      'name': name,
-      'image': image,
-    };
-  }
 }

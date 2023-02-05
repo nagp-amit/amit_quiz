@@ -1,7 +1,9 @@
 import 'package:amit_quiz/cubit/category_cubit.dart';
 import 'package:amit_quiz/cubit/states.dart';
+import 'package:amit_quiz/navigation/routes.dart';
 import 'package:amit_quiz/widgets/card_item.dart';
 import 'package:amit_quiz/widgets/default_appbar.dart';
+import 'package:amit_quiz/widgets/error_state_card.dart';
 import 'package:amit_quiz/widgets/quiz_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,7 +54,9 @@ class HomeScreen extends StatelessWidget {
                                 padding: const EdgeInsets.only(
                                     bottom: 10, right: 10, left: 10),
                                 child: InkWell(
-                                    onTap: () => {},
+                                    onTap: () => {
+                                      Navigator.pushNamed(context, Routes.quiz, arguments: state.categories[index])
+                                    },
                                     child: CardItem(
                                       category: state.categories[index],
                                     )),
@@ -72,16 +76,7 @@ class HomeScreen extends StatelessWidget {
               ]);
             }
             if (state is GetCategoryErrorState) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const CircularProgressIndicator(),
-                    const SizedBox(height: 24),
-                    Text(state.error, style: const TextStyle(fontSize: 24)),
-                  ],
-                ),
-              );
+              return ErrorStateCard(errorText: state.error);
             }
             return const Center(child: CircularProgressIndicator());
           },

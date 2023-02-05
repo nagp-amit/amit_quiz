@@ -1,5 +1,6 @@
 import 'package:amit_quiz/model/app_user.dart';
 import 'package:amit_quiz/model/category_model.dart';
+import 'package:amit_quiz/model/question_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class AppStates extends Equatable {
@@ -35,7 +36,7 @@ class AuthSignedIn extends AppStates {
 }
 
 
-//Get Category
+// Category State
 class GetCategorySuccessState extends AppStates {
   final List<CategoryModel> categories;
 
@@ -52,4 +53,32 @@ class GetCategoryErrorState extends AppStates {
 
   @override
   List<Object?> get props => [error];
+}
+
+// Question State
+class GetQuestionSuccessState extends AppStates {
+  final List<QuestionModel> questions;
+
+  GetQuestionSuccessState(this.questions);
+
+  @override
+  List<Object?> get props => [questions];
+}
+
+class GetQuestionErrorState extends AppStates {
+  final String error;
+
+  GetQuestionErrorState(this.error);
+
+  @override
+  List<Object?> get props => [error];
+}
+
+// Quiz State
+
+class QuizIndexState extends AppStates {
+  final int currentIndex;
+  QuizIndexState({
+    required this.currentIndex
+  });
 }
