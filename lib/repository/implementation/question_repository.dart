@@ -15,6 +15,7 @@ class QuestionRepository extends QuestionRepositoryBase {
     for (var element in result.docs) {
         questions.add(QuestionModel.fromFirebaseMap(element.id, element.data()));
     }
-    return questions;
+    
+    return questions.take(10).toList();
   }
 }

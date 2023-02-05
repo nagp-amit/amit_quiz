@@ -1,4 +1,5 @@
 import 'package:amit_quiz/ui/quiz/quiz_screen.dart';
+import 'package:amit_quiz/ui/quiz/result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:amit_quiz/ui/email_create_screen.dart';
 import 'package:amit_quiz/ui/email_signin_screen.dart';
@@ -12,6 +13,7 @@ class Routes {
   static const signInEmail = '/signInEmail';
   static const home = '/home';
   static const quiz = '/quiz';
+  static const result = '/result';
 
   static Route routes(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -25,6 +27,8 @@ class Routes {
         return _buildRoute(routeSettings, EmailSignIn.create);
       case quiz:
         return _buildRoute(routeSettings, QuizScreen.create);
+      case result:
+        return _buildRoute(routeSettings, ResultScreen.create);
       default:
         throw Exception('Route does not exists');
     }

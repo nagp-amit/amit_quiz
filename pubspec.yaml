@@ -20,6 +20,7 @@ dependencies:
   equatable: ^2.0.5
   buildcondition: ^0.0.4
   queen_validators: ^1.0.1
+  flutter_svg: ^1.0.0
 
 dev_dependencies:
   flutter_test:

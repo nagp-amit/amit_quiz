@@ -91,3 +91,13 @@ class QuizIndexState extends QuizState {
     required this.currentIndex
   });
 }
+
+class QuizProgressState extends QuizState {
+  final Map<String, int> answeredQuestions = {};
+  QuizProgressState(String questionId, int answer) {
+    answeredQuestions[questionId] = answer;
+  }
+  QuizProgressState.fromQuizProgressState() {
+    answeredQuestions.clear();
+  }
+}

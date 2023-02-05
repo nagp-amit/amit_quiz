@@ -1,14 +1,12 @@
+import 'package:amit_quiz/config/colors.dart';
 import 'package:amit_quiz/cubit/question_cubit.dart';
 import 'package:amit_quiz/cubit/quiz_cubit.dart';
 import 'package:amit_quiz/cubit/states.dart';
 import 'package:amit_quiz/model/category_model.dart';
 import 'package:amit_quiz/model/question_model.dart';
-import 'package:amit_quiz/widgets/answer_card.dart';
-import 'package:amit_quiz/widgets/content_area.dart';
+import 'package:amit_quiz/navigation/routes.dart';
 import 'package:amit_quiz/widgets/default_button.dart';
 import 'package:amit_quiz/widgets/error_state_card.dart';
-import 'package:amit_quiz/widgets/quiz_app_bar.dart';
-import 'package:amit_quiz/widgets/screen_background_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,43 +25,73 @@ class QuizScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final selectedCategory =
         ModalRoute.of(context)?.settings.arguments as CategoryModel?;
-
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: QuizAppBar(
-        leading: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          decoration: const ShapeDecoration(
-            shape:
-                StadiumBorder(side: BorderSide(color: Colors.white, width: 2)),
-          ),
-          child: Text(selectedCategory?.name ?? 'Apppp'),
-        ),
-        showActionIcon: true,
-        titleWidget: const Text(
-          'Q. ',
-          style: TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
-        ),
-      ),
-      body: BlocBuilder<QuestionCubit, AppStates>(
-        builder: (_, state) {
+    return WillPopScope(
+      child: Scaffold(
+        body: BlocBuilder<QuestionCubit, AppStates>(builder: (_, state) {
           if (state is GetQuestionSuccessState) {
-            return BackgroundDecoration(
-              child: Column(
-                children: [
-                  Expanded(child: QuizBody(questions: state.questions)),
-                  QuizFooter(questions: state.questions)
-                ],
-              ),
+            return Stack(
+              alignment: AlignmentDirectional.topCenter,
+              children: [
+                Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.30,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [mainColor.shade800, mainColor.shade300],
+                        begin: AlignmentDirectional.centerStart,
+                        end: AlignmentDirectional.centerEnd,
+                      ),
+                    )),
+                Positioned(
+                  top: 50,
+                  left: 16,
+                  right: 16,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(selectedCategory?.name ?? '')
+                            // Text('Questions: ${selectedPageIndex + 1}/${widget.quizData!.questionRef!.length}', style: boldTextStyle(color: white, size: 20)),
+                          ]),
+                      DefaultButton(
+                        title: 'End Quiz',
+                        color: mainColor,
+                        onPressed: () {
+                          Navigator.pushNamed(context, Routes.result);
+                        },
+                        textColor: Colors.white,
+                      )
+                    ],
+                  ),
+                ),
+                Positioned(
+                  left: 16,
+                  right: 16,
+                  bottom: 16,
+                  top: MediaQuery.of(context).size.height * 0.20,
+                  child: Container(
+                    padding: const EdgeInsets.all(30),
+                    decoration: boxDecorationWithRoundedCorners(
+                        borderRadius: BorderRadius.circular(12.0)),
+                    child: PageView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: [QuizBody(questions: state.questions)]),
+                  ),
+                )
+              ],
             );
           }
           if (state is GetQuestionErrorState) {
             return ErrorStateCard(errorText: state.error);
           }
           return const Center(child: CircularProgressIndicator());
-        },
+        }),
       ),
+      onWillPop: () {
+        return Future.value(false);
+      },
     );
   }
 }
@@ -79,39 +107,22 @@ class QuizBody extends StatelessWidget {
       builder: (context, state) {
         if (state is QuizIndexState) {
           var currentQuestion = questions[state.currentIndex];
-          return Expanded(
-            child: ContentArea(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.only(top: 20),
-                child: Column(
-                  children: [
-                    Text(
-                      currentQuestion.title,
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w800),
-                    ),
-                    ListView.separated(
-                      itemCount: currentQuestion.answers.length,
-                      shrinkWrap: true,
-                      padding: const EdgeInsets.only(top: 25),
-                      physics: const NeverScrollableScrollPhysics(),
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const SizedBox(
-                          height: 10,
-                        );
-                      },
-                      itemBuilder: (BuildContext context, int index) {
-                        final answer = currentQuestion.answers[index];
-                        return AnswerCard(
-                          isSelected: false,
-                          onTap: () {},
-                          answer: '${answer.id}. ${answer.value}',
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
+          return SingleChildScrollView(
+            child: Column(
+              children: [
+                QuizQuestionComponent(question: currentQuestion),
+                Visibility(
+                  visible: state.currentIndex < questions.length,
+                  child: DefaultButton(
+                    onPressed: () {
+                      context
+                          .read<QuizCubit>()
+                          .updateQuizIndex(state.currentIndex);
+                    },
+                    title: '${state.currentIndex} Next',
+                  ),
+                )
+              ],
             ),
           );
         }
@@ -121,54 +132,84 @@ class QuizBody extends StatelessWidget {
   }
 }
 
-// Quiz Footer
-class QuizFooter extends StatelessWidget {
-  final List<QuestionModel> questions;
-  const QuizFooter({super.key, required this.questions});
+//ignore: must_be_immutable
+class QuizQuestionComponent extends StatefulWidget {
+  int _selectedOptionIndex = -1;
+  final QuestionModel? question;
+
+  QuizQuestionComponent({super.key, this.question});
+
+  @override
+  QuizQuestionComponentState createState() => QuizQuestionComponentState();
+}
+
+class QuizQuestionComponentState extends State<QuizQuestionComponent> {
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
+  Future<void> init() async {
+    //
+  }
+
+  @override
+  void setState(fn) {
+    if (mounted) super.setState(fn);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<QuizCubit, QuizState>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        if (state is QuizIndexState) {
-          return ColoredBox(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            child: Padding(
-              padding: const EdgeInsets.all(25.0),
-              child: Row(
-                children: [
-                  Visibility(
-                    visible: true,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 5.0),
-                      child: SizedBox(
-                        height: 55,
-                        width: 55,
-                        child: IconButton(
-                          onPressed: () {},
-                          icon: const Icon(Icons.arrow_back_ios_new),
-                        ),
-                      ),
-                    ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('addQuestion', textAlign: TextAlign.center),
+        Column(
+          children: List.generate(widget.question!.answers.length, (index) {
+            String mData = widget.question!.answers[index].value;
+            return InkWell(
+                onTap: () {
+                  setState(() {
+                    widget._selectedOptionIndex = index;
+                  });
+                  context.read<QuizCubit>().saveQuizProgress(
+                      widget.question!.id, widget.question!.answers[index].id);
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  width: MediaQuery.of(context).size.width,
+                  margin: const EdgeInsets.only(bottom: 16),
+                  decoration: boxDecorationWithRoundedCorners(
+                    backgroundColor: widget._selectedOptionIndex == index
+                        ? mainColor.shade500
+                        : const Color(0xFF090909),
                   ),
-                  Expanded(
-                    child: Visibility(
-                      visible: true,
-                      child: DefaultButton(
-                        onPressed: () {
-                          context.read<QuizCubit>().updateQuizIndex(state.currentIndex);
-                        },
-                        title: '${state.currentIndex} Next',
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          );
-        }
-        return const Center(child: Text(""));
-      },
+                  child: Text(mData),
+                ));
+          }),
+        ),
+      ],
     );
   }
+}
+
+Decoration boxDecorationWithRoundedCorners({
+  Color backgroundColor = Colors.white,
+  BorderRadius? borderRadius,
+  LinearGradient? gradient,
+  BoxBorder? border,
+  List<BoxShadow>? boxShadow,
+  DecorationImage? decorationImage,
+  BoxShape boxShape = BoxShape.rectangle,
+}) {
+  return BoxDecoration(
+    color: backgroundColor,
+    borderRadius: borderRadius,
+    gradient: gradient,
+    border: border,
+    boxShadow: boxShadow,
+    image: decorationImage,
+    shape: boxShape,
+  );
 }
