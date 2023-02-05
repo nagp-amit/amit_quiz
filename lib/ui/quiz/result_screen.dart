@@ -2,6 +2,7 @@ import 'package:amit_quiz/config/colors.dart';
 import 'package:amit_quiz/cubit/quiz_cubit.dart';
 import 'package:amit_quiz/cubit/states.dart';
 import 'package:amit_quiz/navigation/routes.dart';
+import 'package:amit_quiz/ui/home_screen.dart';
 import 'package:amit_quiz/widgets/content_area.dart';
 import 'package:amit_quiz/widgets/default_button.dart';
 import 'package:amit_quiz/widgets/quiz_app_bar.dart';
@@ -13,7 +14,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 class ResultScreen extends StatelessWidget {
   const ResultScreen({Key? key}) : super(key: key);
 
-  static Widget create(BuildContext context) => const ResultScreen();
+  static Widget create(BuildContext context) => const HomeScreen();
 
   @override
   Widget build(BuildContext context) {
