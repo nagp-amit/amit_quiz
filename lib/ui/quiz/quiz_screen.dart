@@ -18,6 +18,7 @@ class QuizScreen extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments as CategoryModel?;
     int categoryId = selectedCategory == null ? 1 : selectedCategory.id;
     context.read<QuizCubit>().resetProgress();
+    context.read<QuizCubit>().resetIndexState();
     context.read<QuestionCubit>().getQuestions(categoryId);
     return const QuizScreen();
   }

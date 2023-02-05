@@ -17,6 +17,9 @@ class QuizCubit extends Cubit<QuizState> {
 
   void resetProgress() {
     emit(QuizProgressState.toClear());
+  }
+
+  void resetIndexState() {
     emit(QuizIndexState(currentIndex: 0));
   }
 
