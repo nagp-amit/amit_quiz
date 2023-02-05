@@ -80,7 +80,6 @@ class QuizBody extends StatelessWidget {
     return BlocConsumer<QuizCubit, QuizState>(
       listener: (context, state) {},
       builder: (context, state) {
-        context.read<QuizCubit>().updateQuizIndex(-1);
         if (state is QuizIndexState) {
           var currentQuestion = questions[state.currentIndex];
           return Expanded(
@@ -162,7 +161,7 @@ class QuizFooter extends StatelessWidget {
                         onPressed: () {
                           context.read<QuizCubit>().updateQuizIndex(state.currentIndex);
                         },
-                        title: 'Next',
+                        title: '${state.currentIndex} Next',
                       ),
                     ),
                   )

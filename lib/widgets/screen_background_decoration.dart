@@ -1,3 +1,4 @@
+import 'package:amit_quiz/config/colors.dart';
 import 'package:flutter/material.dart';
 
 class BackgroundDecoration extends StatelessWidget {
@@ -15,7 +16,7 @@ class BackgroundDecoration extends StatelessWidget {
         Positioned.fill(
             child: Container(
           decoration: BoxDecoration(
-              color: showGradient ? null : Theme.of(context).primaryColor),
+              color: mainColor.shade800),
           child: CustomPaint(
             painter: BackgroundPainter(),
           ),
