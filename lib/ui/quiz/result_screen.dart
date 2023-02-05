@@ -89,7 +89,7 @@ class ResultDescription extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         const Text('Total', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                                        Text(resultDetails['total']!.toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                        Text(resultDetails['total']!.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                                       ],
                                     )
                                   ),
@@ -105,7 +105,7 @@ class ResultDescription extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         const Text('Correct', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                                        Text(resultDetails['correctCount']!.toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                        Text(resultDetails['correctCount']!.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                                       ],
                                     )
                                   ),
@@ -121,7 +121,7 @@ class ResultDescription extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         const Text('Wrong', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                                        Text(resultDetails['wrongCount']!.toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                        Text(resultDetails['wrongCount']!.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                                       ],
                                     )
                                   ),
@@ -137,7 +137,7 @@ class ResultDescription extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         const Text('UnAnswered', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                                        Text(resultDetails['unAnsweredCount']!.toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                        Text(resultDetails['unAnsweredCount']!.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
                                       ],
                                     )
                                   ),
