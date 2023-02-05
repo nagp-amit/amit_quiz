@@ -19,11 +19,8 @@ class QuizScreen extends StatelessWidget {
     final selectedCategory =
         ModalRoute.of(context)?.settings.arguments as CategoryModel?;
     int categoryId = selectedCategory == null ? 1 : selectedCategory.id;
-
-    return BlocProvider(
-      create: (_) => QuestionCubit()..getQuestions(categoryId),
-      child: const QuizScreen(),
-    );
+    context.read<QuestionCubit>().getQuestions(categoryId);
+    return const QuizScreen();
   }
 
   @override

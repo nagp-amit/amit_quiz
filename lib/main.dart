@@ -1,3 +1,5 @@
+import 'package:amit_quiz/cubit/category_cubit.dart';
+import 'package:amit_quiz/cubit/question_cubit.dart';
 import 'package:amit_quiz/cubit/quiz_cubit.dart';
 import 'package:amit_quiz/repository/auth_repository.dart';
 import 'package:amit_quiz/repository/category_repository.dart';
@@ -24,6 +26,8 @@ void main() async {
   runApp(
     MultiBlocProvider(providers: [
       BlocProvider(create: (BuildContext context) => AuthCubit(AuthRepository())),
+      BlocProvider(create: (BuildContext context) => CategoryCubit()),
+      BlocProvider(create: (BuildContext context) => QuestionCubit()),
       BlocProvider(create: (BuildContext context) => QuizCubit()),
     ], child: MyApp.create())
   );
