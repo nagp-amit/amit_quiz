@@ -76,7 +76,14 @@ class GetQuestionErrorState extends AppStates {
 
 // Quiz State
 
-class QuizIndexState extends AppStates {
+abstract class QuizState extends Equatable {
+   @override
+  List<Object?> get props => [];
+}
+
+
+// Auth State
+class QuizIndexState extends QuizState {
   final int currentIndex;
   QuizIndexState({
     required this.currentIndex

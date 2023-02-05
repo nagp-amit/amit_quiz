@@ -12,7 +12,6 @@ class QuestionCubit extends Cubit<AppStates> {
   Future<void> getQuestions(int categoryId) async {
     try {
       final questions = await _questionRepository.getQuestions(categoryId);
-      emit(QuizIndexState(currentIndex: 0));
       emit(GetQuestionSuccessState(questions));
     } catch (e) {
       emit(GetQuestionErrorState("Error ${e.toString()}"));

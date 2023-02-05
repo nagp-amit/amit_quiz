@@ -1,3 +1,4 @@
+import 'package:amit_quiz/cubit/quiz_cubit.dart';
 import 'package:amit_quiz/repository/auth_repository.dart';
 import 'package:amit_quiz/repository/category_repository.dart';
 import 'package:amit_quiz/repository/implementation/category_repository.dart';
@@ -20,13 +21,11 @@ void main() async {
   await Firebase.initializeApp();
   await injectDependencies();
 
-  final authCubit = AuthCubit(AuthRepository());
-
   runApp(
-    BlocProvider(
-      create: (_) => authCubit,
-      child: MyApp.create(),
-    ),
+    MultiBlocProvider(providers: [
+      BlocProvider(create: (BuildContext context) => AuthCubit(AuthRepository())),
+      BlocProvider(create: (BuildContext context) => QuizCubit()),
+    ], child: MyApp.create())
   );
 }
 

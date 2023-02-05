@@ -2,11 +2,11 @@ import 'package:amit_quiz/cubit/states.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 
-class QuizCubit extends Cubit<QuizIndexState> {
+class QuizCubit extends Cubit<QuizState> {
 
   QuizCubit() : super(QuizIndexState(currentIndex: 0));
 
-  void updateQuizIndex() {
-    emit(QuizIndexState(currentIndex: state.currentIndex + 1));
+  void updateQuizIndex(currentIndex) {
+    emit(QuizIndexState(currentIndex: currentIndex + 1));
   }
 }

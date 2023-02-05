@@ -28,7 +28,7 @@ class QuizScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  final selectedCategory =
+    final selectedCategory =
         ModalRoute.of(context)?.settings.arguments as CategoryModel?;
 
     return Scaffold(
@@ -77,45 +77,49 @@ class QuizBody extends StatelessWidget {
   const QuizBody({super.key, required this.questions});
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<QuizCubit, QuizIndexState>(
+    return BlocConsumer<QuizCubit, QuizState>(
       listener: (context, state) {},
       builder: (context, state) {
-        final currentQuestion = questions[state.currentIndex];
-        return Expanded(
-          child: ContentArea(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.only(top: 20),
-              child: Column(
-                children: [
-                  Text(
-                    currentQuestion.title,
-                    style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.w800),
-                  ),
-                  ListView.separated(
-                    itemCount: currentQuestion.answers.length,
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.only(top: 25),
-                    physics: const NeverScrollableScrollPhysics(),
-                    separatorBuilder: (BuildContext context, int index) {
-                      return const SizedBox(
-                        height: 10,
-                      );
-                    },
-                    itemBuilder: (BuildContext context, int index) {
-                      final answer = currentQuestion.answers[index];
-                      return AnswerCard(
-                        isSelected: false,
-                        onTap: () {},
-                        answer: '${answer.id}. ${answer.value}',
-                      );
-                    },
-                  ),
-                ],
+        context.read<QuizCubit>().updateQuizIndex(-1);
+        if (state is QuizIndexState) {
+          var currentQuestion = questions[state.currentIndex];
+          return Expanded(
+            child: ContentArea(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.only(top: 20),
+                child: Column(
+                  children: [
+                    Text(
+                      currentQuestion.title,
+                      style: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w800),
+                    ),
+                    ListView.separated(
+                      itemCount: currentQuestion.answers.length,
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.only(top: 25),
+                      physics: const NeverScrollableScrollPhysics(),
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const SizedBox(
+                          height: 10,
+                        );
+                      },
+                      itemBuilder: (BuildContext context, int index) {
+                        final answer = currentQuestion.answers[index];
+                        return AnswerCard(
+                          isSelected: false,
+                          onTap: () {},
+                          answer: '${answer.id}. ${answer.value}',
+                        );
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
+          );
+        }
+        return const Center(child: CircularProgressIndicator());
       },
     );
   }
@@ -127,44 +131,47 @@ class QuizFooter extends StatelessWidget {
   const QuizFooter({super.key, required this.questions});
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<QuizCubit, QuizIndexState>(
+    return BlocConsumer<QuizCubit, QuizState>(
       listener: (context, state) {},
       builder: (context, state) {
-        return ColoredBox(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          child: Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: Row(
-              children: [
-                Visibility(
-                  visible: true,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 5.0),
-                    child: SizedBox(
-                      height: 55,
-                      width: 55,
-                      child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.arrow_back_ios_new),
+        if (state is QuizIndexState) {
+          return ColoredBox(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            child: Padding(
+              padding: const EdgeInsets.all(25.0),
+              child: Row(
+                children: [
+                  Visibility(
+                    visible: true,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 5.0),
+                      child: SizedBox(
+                        height: 55,
+                        width: 55,
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: const Icon(Icons.arrow_back_ios_new),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Visibility(
-                    visible: true,
-                    child: DefaultButton(
-                      onPressed: () {
-                        context.read<QuizCubit>().updateQuizIndex();
-                      },
-                      title: 'Next',
+                  Expanded(
+                    child: Visibility(
+                      visible: true,
+                      child: DefaultButton(
+                        onPressed: () {
+                          context.read<QuizCubit>().updateQuizIndex(state.currentIndex);
+                        },
+                        title: 'Next',
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
-          ),
-        );
+          );
+        }
+        return const Center(child: Text(""));
       },
     );
   }
