@@ -4,18 +4,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AnswerCubit extends Cubit<AnswerState> {
 
-  AnswerCubit() : super(QuestionAnswerState(null, null, true));
+  AnswerCubit() : super(QuestionAnswerState.reset());
 
   void saveQuizProgress(String questionId, int ans) {
     emit(SavingAnswer());
-    emit(QuestionAnswerState(questionId, ans, null));
+    emit(QuestionAnswerState(questionId, ans));
   }
 
   void resetProgress() {
-    emit(QuestionAnswerState(null, null, true));
-  }
-
-  void submitQuiz() {
-    emit(QuestionAnswerState(null, null, null));
+    emit(QuestionAnswerState.reset());
   }
 }

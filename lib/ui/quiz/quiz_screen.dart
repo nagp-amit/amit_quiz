@@ -65,7 +65,6 @@ class QuizScreen extends StatelessWidget {
                                   title: 'End Quiz',
                                   color: mainColor,
                                   onPressed: () {
-                                    context.read<AnswerCubit>().submitQuiz();
                                     Navigator.pushNamed(context, Routes.result);
                                   },
                                   textColor: Colors.white,
@@ -165,6 +164,7 @@ class QuizQuestionComponent extends StatelessWidget {
                 Column(
                   children: List.generate(question.answers.length, (index) {
                     String mData = question.answers[index].value;
+                    int mId = question.answers[index].id;
                     return InkWell(
                         onTap: () {
                           context.read<AnswerCubit>().saveQuizProgress(
@@ -181,7 +181,7 @@ class QuizQuestionComponent extends StatelessWidget {
                                     ? mainColor.shade800.withOpacity(0.5)
                                     : const Color(0xFFf3f5f9),
                           ),
-                          child: Text(mData),
+                          child: Text('$mId $mData'),
                         ));
                   }),
                 ),

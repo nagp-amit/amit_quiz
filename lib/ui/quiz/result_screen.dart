@@ -47,11 +47,7 @@ class ResultDescription extends StatelessWidget {
           if (state is GetQuestionSuccessState) {
             context.read<QuizCubit>().saveResult(answeredQuestions);
             var resultDetails = getResultDetails(state);
-            if (resultDetails['error'] != null && resultDetails['error'] != '') {
-              return Column(children: [Center(child: Text('Error ${resultDetails['error'].toString()}'))]);
-            } else {
-              context.read<QuizCubit>().saveResult(resultDetails);
-              return Column(
+            return Column(
                 children: [
                   QuizAppBar(
                     leading: const SizedBox(
@@ -180,8 +176,7 @@ class ResultDescription extends StatelessWidget {
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold)),
                                           Text(
-                                              resultDetails['unAnsweredCount']!
-                                                  .toString(),
+                                              resultDetails['unAnsweredCount'].toString(),
                                               style: const TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold)),
@@ -215,22 +210,19 @@ class ResultDescription extends StatelessWidget {
                   )
                 ],
               );
-            }
           }
           return const Center(child: CircularProgressIndicator());
         });
   }
 
-  Map<String, dynamic> getResultDetails(GetQuestionSuccessState state) {
+  Map<String, int> getResultDetails(GetQuestionSuccessState state) {
     int total = state.questions.length;
     int correctCount = 0;
     int wrongCount = 0;
     int unAnsweredCount = 0;
     String categoryId = '';
     int score = 0;
-    String error = '';
-    try {
-      for (var q in state.questions) {
+    for (var q in state.questions) {
         categoryId = q.categoryId;
         var userAnswer = answeredQuestions[q.id];
         if (userAnswer != null) {
@@ -244,17 +236,13 @@ class ResultDescription extends StatelessWidget {
         }
       }
       score = ((correctCount + wrongCount) - (wrongCount * .25)).toInt();
-    } catch (e) {
-      error = e.toString();
-    }
     return {
       'total': total,
       'correctCount': correctCount,
       'wrongCount': wrongCount,
       'unAnsweredCount': unAnsweredCount,
       'score': score,
-      'categoryId': int.parse(categoryId),
-      'error': error
+      'categoryId': int.parse(categoryId)
     };
   }
 }

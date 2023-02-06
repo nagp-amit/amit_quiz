@@ -18,8 +18,7 @@ class QuizCubit extends Cubit<QuizState> {
     emit(QuizIndexState(currentIndex: 0));
   }
 
-  Future<void> saveResult(Map<String, dynamic> result) async {
-    result.remove('error');
+  Future<void> saveResult(Map<String, int> result) async {
     await  _resultRepository.saveResult(result);
   }
 }
