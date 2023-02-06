@@ -111,6 +111,7 @@ class QuizBody extends StatelessWidget {
   const QuizBody({super.key, required this.questions});
   @override
   Widget build(BuildContext context) {
+    context.read<QuizCubit>().submitQuiz();
     return BlocConsumer<QuizCubit, QuizState>(
       listener: (context, state) {},
       builder: (context, state) {

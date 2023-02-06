@@ -46,8 +46,7 @@ class ResultDescription extends StatelessWidget {
           if (state is GetQuestionSuccessState) {
             var resultDetails = getResultDetails(state);
             if (resultDetails['error'] != null) {
-              const snackBar = SnackBar(content: Text("Invalid Login"));
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              return Center(child: Text(resultDetails['error'].toString()));
             } else {
               return Column(
                 children: [
