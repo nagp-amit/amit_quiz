@@ -1,7 +1,6 @@
 import 'package:amit_quiz/config/colors.dart';
 import 'package:amit_quiz/cubit/answer_qubit.dart';
 import 'package:amit_quiz/cubit/question_cubit.dart';
-import 'package:amit_quiz/cubit/quiz_cubit.dart';
 import 'package:amit_quiz/cubit/states.dart';
 import 'package:amit_quiz/navigation/routes.dart';
 import 'package:amit_quiz/widgets/content_area.dart';
