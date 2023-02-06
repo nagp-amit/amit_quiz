@@ -45,7 +45,7 @@ class ResultDescription extends StatelessWidget {
         builder: (context, state) {
           if (state is GetQuestionSuccessState) {
             var resultDetails = getResultDetails(state);
-            if (resultDetails['error'] != null) {
+            if (resultDetails['error'] != null && resultDetails['error'] != '') {
               return Column(children: [Center(child: Text('Error ${resultDetails['error'].toString()}'))]);
             } else {
               return Column(

@@ -152,7 +152,7 @@ class QuizQuestionComponent extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           if (state is QuestionAnswerState) {
-            var selectedAnswer = state.answeredQuestions[question.id];
+            int selectedAnswer = state.answeredQuestions[question.id] ?? -1;
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

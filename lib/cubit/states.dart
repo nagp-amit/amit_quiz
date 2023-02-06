@@ -107,3 +107,5 @@ class QuestionAnswerState extends AnswerState {
     }
   }
 }
+
+class SavingAnswer extends AnswerState {}

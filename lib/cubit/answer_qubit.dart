@@ -6,7 +6,8 @@ class AnswerCubit extends Cubit<AnswerState> {
 
   AnswerCubit() : super(QuestionAnswerState(null, null, true));
 
-  void saveQuizProgress(String questionId, int ans){
+  void saveQuizProgress(String questionId, int ans) {
+    emit(SavingAnswer());
     emit(QuestionAnswerState(questionId, ans, null));
   }
 
