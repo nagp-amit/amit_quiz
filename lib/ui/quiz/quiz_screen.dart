@@ -20,13 +20,13 @@ class QuizScreen extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments as CategoryModel?;
     int categoryId = selectedCategory == null ? 1 : selectedCategory.id;
     context.read<QuestionCubit>().getQuestions(categoryId);
-    context.read<QuizCubit>().resetIndexState();
-    context.read<AnswerCubit>().resetProgress();
     return const QuizScreen();
   }
 
   @override
   Widget build(BuildContext context) {
+    context.read<QuizCubit>().resetIndexState();
+    context.read<AnswerCubit>().resetProgress();
     final selectedCategory =
         ModalRoute.of(context)?.settings.arguments as CategoryModel?;
     return WillPopScope(

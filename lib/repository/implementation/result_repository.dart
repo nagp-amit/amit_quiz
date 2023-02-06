@@ -7,7 +7,8 @@ class ResultRepository extends ResultRepositoryBase {
   final String collectionName = "results";
 
   @override
-  Future<void> saveResult(Map<String, int> result) async {
+  Future<void> saveResult(Map<String, dynamic> result) async {
+    result['userId'] = _fDataSource.currentUser.uid;
     await _fDataSource.firestore.collection(collectionName).add(result);
   }
 }

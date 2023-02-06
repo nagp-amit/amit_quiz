@@ -1,4 +1,4 @@
 abstract class ResultRepositoryBase {
 
-  void saveResult(Map<String, int> result);
+  Future<void> saveResult(Map<String, dynamic> result);
 }
