@@ -156,7 +156,7 @@ class QuizQuestionComponent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  question.title,
+                  '${question.title} - ${question.id}',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                       fontSize: 24.0, fontWeight: FontWeight.w500),

@@ -99,11 +99,12 @@ abstract class AnswerState extends Equatable {
 
 class QuestionAnswerState extends AnswerState {
   final Map<String, int> answeredQuestions = {};
-  QuestionAnswerState(String questionId, int answer) {
-    answeredQuestions[questionId] = answer;
-  }
-  QuestionAnswerState.reset() {
-    answeredQuestions.clear();
+  QuestionAnswerState(String? questionId, int? answer) {
+    if (questionId != null) {
+      answeredQuestions[questionId] = answer!;
+    } else {
+      answeredQuestions.clear();
+    }
   }
 }
 
