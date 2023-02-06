@@ -24,7 +24,8 @@ class ResultScreen extends StatelessWidget {
         builder: (_, state) {
           if (state is QuizProgressState) {
             return BackgroundDecoration(
-              child: ResultDescription(answeredQuestions: state.answeredQuestions),
+              child:
+                  ResultDescription(answeredQuestions: state.answeredQuestions),
             );
           }
           return const Center(child: CircularProgressIndicator());
@@ -40,17 +41,22 @@ class ResultDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<QuestionCubit, AppStates>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        if(state is GetQuestionSuccessState) {
-          var resultDetails = getResultDetails(state);
-          return Column(
+        listener: (context, state) {},
+        builder: (context, state) {
+          if (state is GetQuestionSuccessState) {
+            var resultDetails = getResultDetails(state);
+            if (resultDetails['error'] != null) {
+              const snackBar = SnackBar(content: Text("Invalid Login"));
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            } else {
+              return Column(
                 children: [
                   QuizAppBar(
                     leading: const SizedBox(
                       height: kToolbarHeight,
                     ),
-                    title: "${resultDetails['correctCount']} out of ${resultDetails['total']} are correct",
+                    title:
+                        "${resultDetails['correctCount']} out of ${resultDetails['total']} are correct",
                   ),
                   Expanded(
                     child: ContentArea(
@@ -72,75 +78,113 @@ class ResultDescription extends StatelessWidget {
                         const SizedBox(
                           height: 25,
                         ),
-                       Column(
+                        Column(
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              
                               children: [
                                 ClipRRect(
-                                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(12.0)),
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Container(
-                                    width: 75,
-                                    height: 70,
-                                    color: mainColor.shade700,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        const Text('Total', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                                        Text(resultDetails['total']!.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                                      ],
-                                    )
-                                  ),
+                                      width: 75,
+                                      height: 70,
+                                      color: mainColor.shade700,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Text('Total',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold)),
+                                          Text(
+                                              resultDetails['total']!
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold)),
+                                        ],
+                                      )),
                                 ),
                                 ClipRRect(
-                                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(12.0)),
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Container(
-                                    width: 75,
-                                    height: 70,
-                                    color: const Color.fromARGB(255, 11, 163, 16),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        const Text('Correct', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                                        Text(resultDetails['correctCount']!.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                                      ],
-                                    )
-                                  ),
+                                      width: 75,
+                                      height: 70,
+                                      color: const Color.fromARGB(
+                                          255, 11, 163, 16),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Text('Correct',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold)),
+                                          Text(
+                                              resultDetails['correctCount']!
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold)),
+                                        ],
+                                      )),
                                 ),
                                 ClipRRect(
-                                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(12.0)),
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Container(
-                                    width: 75,
-                                    height: 70,
-                                    color: const Color.fromARGB(255, 253, 51, 36),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        const Text('Wrong', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                                        Text(resultDetails['wrongCount']!.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                                      ],
-                                    )
-                                  ),
+                                      width: 75,
+                                      height: 70,
+                                      color: const Color.fromARGB(
+                                          255, 253, 51, 36),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Text('Wrong',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold)),
+                                          Text(
+                                              resultDetails['wrongCount']!
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold)),
+                                        ],
+                                      )),
                                 ),
                                 ClipRRect(
-                                  borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(12.0)),
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   child: Container(
-                                    width: 95,
-                                    height: 70,
-                                    color: const Color.fromARGB(255, 162, 130, 12),
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        const Text('UnAnswered', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                                        Text(resultDetails['unAnsweredCount']!.toString(), style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                                      ],
-                                    )
-                                  ),
+                                      width: 95,
+                                      height: 70,
+                                      color: const Color.fromARGB(
+                                          255, 162, 130, 12),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Text('UnAnswered',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold)),
+                                          Text(
+                                              resultDetails['unAnsweredCount']!
+                                                  .toString(),
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold)),
+                                        ],
+                                      )),
                                 ),
                               ],
                             )
@@ -169,37 +213,46 @@ class ResultDescription extends StatelessWidget {
                   )
                 ],
               );
-        }
-        return const Center(child: CircularProgressIndicator());
-      }
-    );
+            }
+          }
+          return const Center(child: CircularProgressIndicator());
+        });
   }
 
-  Map<String, int> getResultDetails(GetQuestionSuccessState state) {
+  Map<String, dynamic> getResultDetails(GetQuestionSuccessState state) {
     int total = state.questions.length;
     int correctCount = 0;
     int wrongCount = 0;
     int unAnsweredCount = 0;
-    for (var q in state.questions)
-    {
-      var userAnswer = answeredQuestions[q.id];
-      if (userAnswer != null) {
-        if (q.correctAnsId == userAnswer) {
-          correctCount++;
+    String categoryId = '';
+    String error = '';
+    try {
+      for (var q in state.questions) {
+        categoryId = q.categoryId;
+        var userAnswer = answeredQuestions[q.id];
+        if (userAnswer != null) {
+          if (q.correctAnsId == userAnswer) {
+            correctCount++;
+          } else {
+            wrongCount++;
+          }
         } else {
-          wrongCount++;
+          unAnsweredCount++;
         }
-      } else {
-        unAnsweredCount++;
       }
+    } catch (e) {
+      error = e.toString();
     }
-    int score = int.parse(((correctCount + wrongCount) - (wrongCount * .25)).toString());
+    int score = int.parse(
+        ((correctCount + wrongCount) - (wrongCount * .25)).toString());
     return {
       'total': total,
       'correctCount': correctCount,
       'wrongCount': wrongCount,
       'unAnsweredCount': unAnsweredCount,
-      'score': score
+      'score': score,
+      'categoryId': int.parse(categoryId),
+      'error': error
     };
   }
 }

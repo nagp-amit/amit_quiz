@@ -26,4 +26,8 @@ class QuizCubit extends Cubit<QuizState> {
   void submitQuiz() {
     emit(QuizProgressState.toSubmit());
   }
+
+  void saveResult(Map<String, int> result) {
+
+  }
 }
