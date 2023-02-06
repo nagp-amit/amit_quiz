@@ -45,6 +45,7 @@ class ResultDescription extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           if (state is GetQuestionSuccessState) {
+            context.read<QuizCubit>().saveResult(answeredQuestions);
             var resultDetails = getResultDetails(state);
             if (resultDetails['error'] != null && resultDetails['error'] != '') {
               return Column(children: [Center(child: Text('Error ${resultDetails['error'].toString()}'))]);

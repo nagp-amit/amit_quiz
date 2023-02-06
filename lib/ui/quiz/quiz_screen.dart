@@ -25,7 +25,7 @@ class QuizScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<QuizCubit>().resetIndexState();
+    context.read<QuizCubit>().updateQuizIndex(-1);
     context.read<AnswerCubit>().resetProgress();
     final selectedCategory =
         ModalRoute.of(context)?.settings.arguments as CategoryModel?;
