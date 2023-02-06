@@ -1,6 +1,6 @@
 import 'package:amit_quiz/config/colors.dart';
+import 'package:amit_quiz/cubit/answer_qubit.dart';
 import 'package:amit_quiz/cubit/question_cubit.dart';
-import 'package:amit_quiz/cubit/quiz_cubit.dart';
 import 'package:amit_quiz/cubit/states.dart';
 import 'package:amit_quiz/navigation/routes.dart';
 import 'package:amit_quiz/widgets/content_area.dart';
@@ -20,9 +20,9 @@ class ResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      body: BlocBuilder<QuizCubit, QuizState>(
+      body: BlocBuilder<AnswerCubit, AnswerState>(
         builder: (_, state) {
-          if (state is QuizProgressState) {
+          if (state is QuestionAnswerState) {
             return BackgroundDecoration(
               child:
                   ResultDescription(answeredQuestions: state.answeredQuestions),
@@ -46,7 +46,7 @@ class ResultDescription extends StatelessWidget {
           if (state is GetQuestionSuccessState) {
             var resultDetails = getResultDetails(state);
             if (resultDetails['error'] != null) {
-              return Center(child: Text(resultDetails['error'].toString()));
+              return Column(children: [Center(child: Text('Error ${resultDetails['error'].toString()}'))]);
             } else {
               return Column(
                 children: [

@@ -92,9 +92,14 @@ class QuizIndexState extends QuizState {
   });
 }
 
-class QuizProgressState extends QuizState {
+abstract class AnswerState extends Equatable {
+   @override
+  List<Object?> get props => [];
+}
+
+class QuestionAnswerState extends AnswerState {
   final Map<String, int> answeredQuestions = {};
-  QuizProgressState(String? questionId, int? answer, bool? isReset) {
+  QuestionAnswerState(String? questionId, int? answer, bool? isReset) {
     if (questionId != null && answer != null) {
       answeredQuestions[questionId] = answer;
     } else if (isReset != null) {

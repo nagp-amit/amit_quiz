@@ -1,4 +1,5 @@
 import 'package:amit_quiz/config/colors.dart';
+import 'package:amit_quiz/cubit/answer_qubit.dart';
 import 'package:amit_quiz/cubit/question_cubit.dart';
 import 'package:amit_quiz/cubit/quiz_cubit.dart';
 import 'package:amit_quiz/cubit/states.dart';
@@ -20,6 +21,7 @@ class QuizScreen extends StatelessWidget {
     int categoryId = selectedCategory == null ? 1 : selectedCategory.id;
     context.read<QuestionCubit>().getQuestions(categoryId);
     context.read<QuizCubit>().resetIndexState();
+    context.read<AnswerCubit>().resetProgress();
     return const QuizScreen();
   }
 
@@ -63,7 +65,7 @@ class QuizScreen extends StatelessWidget {
                                   title: 'End Quiz',
                                   color: mainColor,
                                   onPressed: () {
-                                    context.read<QuizCubit>().submitQuiz();
+                                    context.read<AnswerCubit>().submitQuiz();
                                     Navigator.pushNamed(context, Routes.result);
                                   },
                                   textColor: Colors.white,
@@ -111,7 +113,6 @@ class QuizBody extends StatelessWidget {
   const QuizBody({super.key, required this.questions});
   @override
   Widget build(BuildContext context) {
-    context.read<QuizCubit>().submitQuiz();
     return BlocConsumer<QuizCubit, QuizState>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -147,10 +148,10 @@ class QuizQuestionComponent extends StatelessWidget {
   const QuizQuestionComponent({super.key, required this.question});
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<QuizCubit, QuizState>(
+    return BlocConsumer<AnswerCubit, AnswerState>(
         listener: (context, state) {},
         builder: (context, state) {
-          if (state is QuizProgressState) {
+          if (state is QuestionAnswerState) {
             var selectedAnswer = state.answeredQuestions[question.id];
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,7 +167,7 @@ class QuizQuestionComponent extends StatelessWidget {
                     String mData = question.answers[index].value;
                     return InkWell(
                         onTap: () {
-                          context.read<QuizCubit>().saveQuizProgress(
+                          context.read<AnswerCubit>().saveQuizProgress(
                               question.id, question.answers[index].id);
                         },
                         child: Container(

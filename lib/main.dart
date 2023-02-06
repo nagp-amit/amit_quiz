@@ -1,3 +1,4 @@
+import 'package:amit_quiz/cubit/answer_qubit.dart';
 import 'package:amit_quiz/cubit/category_cubit.dart';
 import 'package:amit_quiz/cubit/question_cubit.dart';
 import 'package:amit_quiz/cubit/quiz_cubit.dart';
@@ -31,6 +32,7 @@ void main() async {
       BlocProvider(create: (BuildContext context) => CategoryCubit()..getCategories()),
       BlocProvider(create: (BuildContext context) => QuestionCubit()),
       BlocProvider(create: (BuildContext context) => QuizCubit()),
+      BlocProvider(create: (BuildContext context) => AnswerCubit()),
     ], child: MyApp.create())
   );
 }
