@@ -225,6 +225,7 @@ class ResultDescription extends StatelessWidget {
     int wrongCount = 0;
     int unAnsweredCount = 0;
     String categoryId = '';
+    int score = 0;
     String error = '';
     try {
       for (var q in state.questions) {
@@ -240,11 +241,10 @@ class ResultDescription extends StatelessWidget {
           unAnsweredCount++;
         }
       }
+      score = ((correctCount + wrongCount) - (wrongCount * .25)).toInt();
     } catch (e) {
       error = e.toString();
     }
-    int score = int.parse(
-        ((correctCount + wrongCount) - (wrongCount * .25)).toString());
     return {
       'total': total,
       'correctCount': correctCount,

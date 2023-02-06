@@ -1,5 +1,6 @@
 import 'package:amit_quiz/config/colors.dart';
 import 'package:amit_quiz/cubit/category_cubit.dart';
+import 'package:amit_quiz/cubit/quiz_cubit.dart';
 import 'package:amit_quiz/cubit/states.dart';
 import 'package:amit_quiz/navigation/routes.dart';
 import 'package:amit_quiz/widgets/card_item.dart';
@@ -11,7 +12,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
-  static Widget create(BuildContext context) => const HomeScreen();
+  static Widget create(BuildContext context) {
+    context.read<QuizCubit>().resetProgress();
+    return const HomeScreen();
+  }
 
   @override
   Widget build(BuildContext context) {

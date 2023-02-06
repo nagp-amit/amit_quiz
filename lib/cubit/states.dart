@@ -94,11 +94,11 @@ class QuizIndexState extends QuizState {
 
 class QuizProgressState extends QuizState {
   final Map<String, int> answeredQuestions = {};
-  QuizProgressState(String questionId, int answer) {
-    answeredQuestions[questionId] = answer;
+  QuizProgressState(String? questionId, int? answer, bool? isReset) {
+    if (questionId != null && answer != null) {
+      answeredQuestions[questionId] = answer;
+    } else if (isReset != null) {
+      answeredQuestions.clear();
+    }
   }
-  QuizProgressState.toClear() {
-    answeredQuestions.clear();
-  }
-  QuizProgressState.toSubmit();
 }

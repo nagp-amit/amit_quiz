@@ -12,11 +12,11 @@ class QuizCubit extends Cubit<QuizState> {
   }
 
   void saveQuizProgress(String questionId, int ans){
-    emit(QuizProgressState(questionId, ans));
+    emit(QuizProgressState(questionId, ans, null));
   }
 
   void resetProgress() {
-    emit(QuizProgressState.toClear());
+    emit(QuizProgressState(null, null, true));
   }
 
   void resetIndexState() {
@@ -24,7 +24,7 @@ class QuizCubit extends Cubit<QuizState> {
   }
 
   void submitQuiz() {
-    emit(QuizProgressState.toSubmit());
+    emit(QuizProgressState(null, null, null));
   }
 
   void saveResult(Map<String, int> result) {
