@@ -11,7 +11,7 @@ class AnswerCubit extends Cubit<AnswerState> {
   AnswerCubit() : super(QuestionAnswerState(null, null));
 
   Future<void> saveQuizProgress(String questionId, int ans) async {
-    await  _resultRepository.saveResult({'questionId': questionId, 'ans': ans, 'DT': DateTime.now()});
+    await  _resultRepository.saveResult({'questionIdl': questionId, 'ans': ans, 'DT': DateTime.now()});
     emit(SavingAnswer());
     emit(QuestionAnswerState(questionId, ans));
   }
