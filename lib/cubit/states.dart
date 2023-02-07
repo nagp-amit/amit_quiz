@@ -1,6 +1,7 @@
 import 'package:amit_quiz/model/app_user.dart';
 import 'package:amit_quiz/model/category_model.dart';
 import 'package:amit_quiz/model/question_model.dart';
+import 'package:amit_quiz/model/result_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class AppStates extends Equatable {
@@ -84,7 +85,6 @@ abstract class QuizState extends Equatable {
 class NextQuestionLoading extends QuizState {}
 
 
-// Auth State
 class QuizIndexState extends QuizState {
   final int currentIndex;
   QuizIndexState({
@@ -97,15 +97,31 @@ abstract class AnswerState extends Equatable {
   List<Object?> get props => [];
 }
 
+// ignore: must_be_immutable
 class QuestionAnswerState extends AnswerState {
-  final Map<String, int> answeredQuestions = {};
-  QuestionAnswerState(String? questionId, int? answer) {
-    if (questionId != null) {
-      answeredQuestions[questionId] = answer!;
-    } else {
-      answeredQuestions.clear();
-    }
+  Map<String, int> answeredQuestions = {};
+  QuestionAnswerState(Map<String, int> data) {
+    answeredQuestions = Map.from(data);
   }
 }
 
 class SavingAnswer extends AnswerState {}
+
+
+class GetHistorySuccessState extends AppStates {
+  final List<ResultModel> results;
+
+  GetHistorySuccessState(this.results);
+
+  @override
+  List<Object?> get props => [results];
+}
+
+class GetHistoryErrorState extends AppStates {
+  final String error;
+
+  GetHistoryErrorState(this.error);
+
+  @override
+  List<Object?> get props => [error];
+}

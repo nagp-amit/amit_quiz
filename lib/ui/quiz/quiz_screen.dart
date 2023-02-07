@@ -1,4 +1,5 @@
 import 'package:amit_quiz/config/colors.dart';
+import 'package:amit_quiz/constants/app_constants.dart';
 import 'package:amit_quiz/cubit/answer_qubit.dart';
 import 'package:amit_quiz/cubit/question_cubit.dart';
 import 'package:amit_quiz/cubit/quiz_cubit.dart';
@@ -26,9 +27,9 @@ class QuizScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.read<QuizCubit>().updateQuizIndex(-1);
-    context.read<AnswerCubit>().resetProgress();
     final selectedCategory =
         ModalRoute.of(context)?.settings.arguments as CategoryModel?;
+    context.read<AnswerCubit>().resetProgress();
     return WillPopScope(
       child: Scaffold(
         body: BlocBuilder<QuestionCubit, AppStates>(builder: (_, state) {
@@ -129,7 +130,7 @@ class QuizBody extends StatelessWidget {
                           .read<QuizCubit>()
                           .updateQuizIndex(state.currentIndex);
                     },
-                    title: '${state.currentIndex} Next',
+                    title: 'Next',
                   ),
                 )
               ],
@@ -156,19 +157,20 @@ class QuizQuestionComponent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  '${question.title} - ${question.id}',
+                  question.title,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                       fontSize: 24.0, fontWeight: FontWeight.w500),
                 ),
+                sizedBox12,
                 Column(
                   children: List.generate(question.answers.length, (index) {
                     String mData = question.answers[index].value;
-                    int mId = question.answers[index].id;
                     return InkWell(
                         onTap: () {
-                          context.read<AnswerCubit>().saveQuizProgress(
-                              question.id, question.answers[index].id);
+                          var data = Map<String, int>.from(state.answeredQuestions);
+                          data[question.id] = question.answers[index].id;
+                          context.read<AnswerCubit>().saveQuizProgress(data);
                         },
                         child: Container(
                           padding: const EdgeInsets.all(16),
@@ -181,7 +183,7 @@ class QuizQuestionComponent extends StatelessWidget {
                                     ? mainColor.shade800.withOpacity(0.5)
                                     : const Color(0xFFf3f5f9),
                           ),
-                          child: Text('$mId $mData'),
+                          child: Text(mData),
                         ));
                   }),
                 ),

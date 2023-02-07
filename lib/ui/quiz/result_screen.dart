@@ -2,6 +2,7 @@ import 'package:amit_quiz/config/colors.dart';
 import 'package:amit_quiz/cubit/answer_qubit.dart';
 import 'package:amit_quiz/cubit/question_cubit.dart';
 import 'package:amit_quiz/cubit/states.dart';
+import 'package:amit_quiz/model/result_model.dart';
 import 'package:amit_quiz/navigation/routes.dart';
 import 'package:amit_quiz/widgets/content_area.dart';
 import 'package:amit_quiz/widgets/default_button.dart';
@@ -52,7 +53,7 @@ class ResultDescription extends StatelessWidget {
                       height: kToolbarHeight,
                     ),
                     title:
-                        "${resultDetails['correctCount']} out of ${resultDetails['total']} are correct",
+                        "${resultDetails.correctCount} out of ${resultDetails.total} are correct",
                   ),
                   Expanded(
                     child: ContentArea(
@@ -68,7 +69,7 @@ class ResultDescription extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'You have got ${resultDetails['score']!.toString()} Points',
+                          'You have got ${resultDetails.score} Points',
                           style: TextStyle(color: mainColor.shade800),
                         ),
                         const SizedBox(
@@ -96,8 +97,7 @@ class ResultDescription extends StatelessWidget {
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold)),
                                           Text(
-                                              resultDetails['total']!
-                                                  .toString(),
+                                              resultDetails.total.toString(),
                                               style: const TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold)),
@@ -122,7 +122,7 @@ class ResultDescription extends StatelessWidget {
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold)),
                                           Text(
-                                              resultDetails['correctCount']!
+                                              resultDetails.correctCount
                                                   .toString(),
                                               style: const TextStyle(
                                                   color: Colors.white,
@@ -148,7 +148,7 @@ class ResultDescription extends StatelessWidget {
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold)),
                                           Text(
-                                              resultDetails['wrongCount']!
+                                              resultDetails.wrongCount
                                                   .toString(),
                                               style: const TextStyle(
                                                   color: Colors.white,
@@ -174,7 +174,7 @@ class ResultDescription extends StatelessWidget {
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold)),
                                           Text(
-                                              resultDetails['unAnsweredCount'].toString(),
+                                              resultDetails.unAnsweredCount.toString(),
                                               style: const TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold)),
@@ -197,11 +197,12 @@ class ResultDescription extends StatelessWidget {
                             Expanded(
                                 child: DefaultButton(
                               onPressed: () {
+                                context.read<AnswerCubit>().saveResult(resultDetails);
                                 Navigator.of(context).pushNamedAndRemoveUntil(
                                     Routes.home,
                                     (Route<dynamic> route) => false);
                               },
-                              title: 'Go to home',
+                              title: 'Save And Go to home',
                             ))
                           ],
                         )),
@@ -213,7 +214,8 @@ class ResultDescription extends StatelessWidget {
         });
   }
 
-  Map<String, int> getResultDetails(GetQuestionSuccessState state) {
+  ResultModel getResultDetails(GetQuestionSuccessState state) {
+
     int total = state.questions.length;
     int correctCount = 0;
     int wrongCount = 0;
@@ -234,13 +236,13 @@ class ResultDescription extends StatelessWidget {
         }
       }
       score = ((correctCount + wrongCount) - (wrongCount * .25)).toInt();
-    return {
-      'total': total,
-      'correctCount': correctCount,
-      'wrongCount': wrongCount,
-      'unAnsweredCount': unAnsweredCount,
-      'score': score,
-      'categoryId': int.parse(categoryId)
-    };
+    return ResultModel(
+      total: total,
+      correctCount: correctCount,
+      wrongCount: wrongCount,
+      unAnsweredCount: unAnsweredCount,
+      score: score,
+      categoryId: categoryId
+    );
   }
 }

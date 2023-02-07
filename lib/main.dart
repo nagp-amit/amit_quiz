@@ -1,5 +1,6 @@
 import 'package:amit_quiz/cubit/answer_qubit.dart';
 import 'package:amit_quiz/cubit/category_cubit.dart';
+import 'package:amit_quiz/cubit/history_cubit.dart';
 import 'package:amit_quiz/cubit/question_cubit.dart';
 import 'package:amit_quiz/cubit/quiz_cubit.dart';
 import 'package:amit_quiz/repository/auth_repository.dart';
@@ -30,6 +31,7 @@ void main() async {
     MultiBlocProvider(providers: [
       BlocProvider(create: (BuildContext context) => AuthCubit(AuthRepository())),
       BlocProvider(create: (BuildContext context) => CategoryCubit()..getCategories()),
+      BlocProvider(create: (BuildContext context) => HistoryCubit()..getResults()),
       BlocProvider(create: (BuildContext context) => QuestionCubit()),
       BlocProvider(create: (BuildContext context) => QuizCubit()),
       BlocProvider(create: (BuildContext context) => AnswerCubit()),
