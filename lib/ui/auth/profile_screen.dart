@@ -140,7 +140,7 @@ class _MyUserSectionState extends State<_MyUserSection> {
                             _nameController.text
                           );
                     },
-              child: const Text('Save'),
+              child: const Text('Save', style: TextStyle(backgroundColor: mainColor, color: Colors.white)),
             ),
           ],
         ),
