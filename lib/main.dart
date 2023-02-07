@@ -1,8 +1,5 @@
-import 'package:amit_quiz/cubit/answer_qubit.dart';
-import 'package:amit_quiz/cubit/category_cubit.dart';
-import 'package:amit_quiz/cubit/history_cubit.dart';
-import 'package:amit_quiz/cubit/question_cubit.dart';
-import 'package:amit_quiz/cubit/quiz_cubit.dart';
+
+import 'package:amit_quiz/cubit/cubits.dart';
 import 'package:amit_quiz/repository/auth_repository.dart';
 import 'package:amit_quiz/repository/category_repository.dart';
 import 'package:amit_quiz/repository/implementation/category_repository.dart';
@@ -14,7 +11,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:amit_quiz/app.dart';
-import 'package:amit_quiz/cubit/auth_cubit.dart';
 import 'package:amit_quiz/repository/implementation/auth_repository.dart';
 import 'package:get_it/get_it.dart';
 

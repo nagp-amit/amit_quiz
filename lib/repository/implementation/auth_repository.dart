@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:amit_quiz/constants/app_constants.dart';
 import 'package:amit_quiz/data_source/firebase_data_source.dart';
 import 'package:amit_quiz/main.dart';
@@ -21,7 +23,7 @@ class AuthRepository extends AuthRepositoryBase {
         image: defaultImageUrl
       );
       await _fDataSource.createAppUser(req);
-      final appUser = await _fDataSource.getAppUser();
+      var appUser = await getCurrentUser();
       return appUser;
     } else {
       return null;
@@ -43,11 +45,28 @@ class AuthRepository extends AuthRepositoryBase {
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
   }
-  Future createUser({
-    required String uId,
-    required String name,
-    required String email
-  }) async {
-    
+
+  @override
+  Future updateUser({required String name,required File? image}) async {
+    final user = FirebaseAuth.instance.currentUser;
+    var updateReq = {
+      'name': name
+    };
+    if (image != null) {
+      final fileName = image.uri.pathSegments.last;
+      final imagePath = 'UsersImages/{user?.uid-}$fileName';
+      final storageRef = _fDataSource.storage.ref(imagePath);
+      await storageRef.putFile(image);
+      final url = await storageRef.getDownloadURL();
+      updateReq["image"] = url;
+    }
+
+    await _fDataSource.firestore.collection('users').doc(user?.uid).update(updateReq);
+  }
+
+  @override
+  Future<AppUser?> getCurrentUser() async {
+    final appUser = await _fDataSource.getAppUser();
+    return appUser;
   }
 }

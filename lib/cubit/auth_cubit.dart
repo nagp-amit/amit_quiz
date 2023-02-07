@@ -36,4 +36,11 @@ class AuthCubit extends Cubit<AppStates> {
     await _authRepository.signOut();
     emit(AuthSignedOut());
   }
+
+  Future<void> reloadUser() async {
+    var user = await _authRepository.getCurrentUser();
+    if (user != null) {
+      emit(AuthSignedIn(user));
+    }
+  }
 }

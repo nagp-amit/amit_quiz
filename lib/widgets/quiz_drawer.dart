@@ -21,9 +21,13 @@ class QuizDrawer extends StatelessWidget {
               child: const BuildDrawerHeader(),
             ),
           ),
-          const BuildDrawerListItem(
+          BuildDrawerListItem(
             leadingIcon: Icons.person,
             title: 'My Profile',
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                                    Routes.profile);
+            },
           ),
           const BuildDrawerListItemsDivider(),
           const BuildDrawerListItem(
@@ -66,9 +70,13 @@ class BuildDrawerHeader extends StatelessWidget {
                     shape: BoxShape.rectangle,
                     color: Colors.orange[100],
                   ),
-                  child: Image.network(
+                  child: SizedBox(
+                    height: 150,
+                    width: 180,
+                    child: Image.network(
                     image,
                     fit: BoxFit.cover,
+                  ),
                   ),
                 ),
                 Text(
@@ -128,19 +136,6 @@ class BuildDrawerListItemsDivider extends StatelessWidget {
       thickness: 1,
       indent: 18,
       endIndent: 24,
-    );
-  }
-}
-
-class MyDivider extends StatelessWidget {
-  const MyDivider({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 1.0,
-      color: Colors.grey[300],
     );
   }
 }
