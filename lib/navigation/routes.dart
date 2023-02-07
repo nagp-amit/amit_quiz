@@ -1,9 +1,9 @@
+import 'package:amit_quiz/ui/auth/email_create_screen.dart';
+import 'package:amit_quiz/ui/auth/email_signin_screen.dart';
+import 'package:amit_quiz/ui/home/home_screen.dart';
 import 'package:amit_quiz/ui/quiz/quiz_screen.dart';
 import 'package:amit_quiz/ui/quiz/result_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:amit_quiz/ui/email_create_screen.dart';
-import 'package:amit_quiz/ui/email_signin_screen.dart';
-import 'package:amit_quiz/ui/home_screen.dart';
 import 'package:amit_quiz/ui/splash_screen.dart';
 
 class Routes {

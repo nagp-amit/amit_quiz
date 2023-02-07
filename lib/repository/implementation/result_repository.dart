@@ -17,7 +17,7 @@ class ResultRepository extends ResultRepositoryBase {
 
   @override
   Future<List<ResultModel>> getResults() async {
-    var result = await _fDataSource.firestore.collection(collectionName).get();
+    var result = await _fDataSource.firestore.collection(collectionName).where("userId", isEqualTo: _fDataSource.currentUser.uid).get();
 
     List<ResultModel> results = [];
     for (var element in result.docs) {

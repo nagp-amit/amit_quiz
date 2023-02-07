@@ -1,16 +1,13 @@
 import 'package:amit_quiz/config/colors.dart';
 import 'package:amit_quiz/constants/app_constants.dart';
+import 'package:amit_quiz/widgets/widgets.dart';
 import 'package:amit_quiz/cubit/states.dart';
 import 'package:amit_quiz/navigation/routes.dart';
-import 'package:amit_quiz/widgets/build_header.dart';
-import 'package:amit_quiz/widgets/build_second_header.dart';
-import 'package:amit_quiz/widgets/default_button.dart';
-import 'package:amit_quiz/widgets/default_text_button.dart';
 import 'package:queen_validators/queen_validators.dart';
-import 'package:amit_quiz/widgets/default_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:amit_quiz/cubit/auth_cubit.dart';
+import 'package:amit_quiz/cubit/cubits.dart';
+
 
 class EmailSignIn extends StatefulWidget {
   const EmailSignIn({Key? key}) : super(key: key);

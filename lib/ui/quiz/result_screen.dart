@@ -1,16 +1,12 @@
 import 'package:amit_quiz/config/colors.dart';
-import 'package:amit_quiz/cubit/answer_qubit.dart';
-import 'package:amit_quiz/cubit/question_cubit.dart';
+import 'package:amit_quiz/cubit/cubits.dart';
 import 'package:amit_quiz/cubit/states.dart';
-import 'package:amit_quiz/model/result_model.dart';
 import 'package:amit_quiz/navigation/routes.dart';
-import 'package:amit_quiz/widgets/content_area.dart';
-import 'package:amit_quiz/widgets/default_button.dart';
-import 'package:amit_quiz/widgets/quiz_app_bar.dart';
-import 'package:amit_quiz/widgets/screen_background_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:amit_quiz/widgets/widgets.dart';
+import 'package:amit_quiz/model/models.dart';
 
 class ResultScreen extends StatelessWidget {
   const ResultScreen({Key? key}) : super(key: key);

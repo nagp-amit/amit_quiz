@@ -1,5 +1,6 @@
 import 'package:amit_quiz/cubit/auth_cubit.dart';
 import 'package:amit_quiz/cubit/states.dart';
+import 'package:amit_quiz/navigation/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:amit_quiz/config/colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,15 +26,20 @@ class QuizDrawer extends StatelessWidget {
             title: 'My Profile',
           ),
           const BuildDrawerListItemsDivider(),
-          BuildDrawerListItem(
+          const BuildDrawerListItem(
             leadingIcon: Icons.person,
             title: 'Contact Us',
-            onTap: () {},
           ),
           const BuildDrawerListItemsDivider(),
-          const BuildDrawerListItem(
-            leadingIcon: Icons.settings,
-            title: 'Settings',
+          BuildDrawerListItem(
+            leadingIcon: Icons.logout,
+            title: 'Logout',
+            onTap: () {
+              context.read<AuthCubit>().signOut();
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                                    Routes.home,
+                                    (Route<dynamic> route) => false);
+            },
           ),
           const BuildDrawerListItemsDivider(),
         ],
