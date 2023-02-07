@@ -9,7 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import '../../cubit/cubits.dart';
 
 class ProfileScreen extends StatelessWidget {
-   const ProfileScreen({Key? key}) : super(key: key);
+  const ProfileScreen({Key? key}) : super(key: key);
 
   static Widget create(BuildContext context) {
     return const ProfileScreen();
@@ -18,14 +18,13 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AppStates>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        if (state is AuthSignedIn) {
-          return ProfileBody(appUser: state.user);
-        }
-        return const Center(child: CircularProgressIndicator());
-      }
-    );
+        listener: (context, state) {},
+        builder: (context, state) {
+          if (state is AuthSignedIn) {
+            return ProfileBody(appUser: state.user);
+          }
+          return const Center(child: CircularProgressIndicator());
+        });
   }
 }
 
@@ -35,39 +34,39 @@ class ProfileBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => EditMyUserCubit(appUser),
-      child:Scaffold(
-        appBar: AppBar(
-          title: const Text('Edit Profile'),
-          backgroundColor: mainColor.shade800,
-        ),
-        body: BlocConsumer<EditMyUserCubit, EditMyUserState>(
-          listener: (context, state) {
-            if (state.isDone) {
-              context.read<AuthCubit>().reloadUser();
-              Navigator.of(context).pop();
-            }
-          },
-          builder: (_, state) {
-            return Stack(
-              children: [
-                _MyUserSection(
-                  user: appUser,
-                  pickedImage: state.pickedImage,
-                  isSaving: state.isLoading,
-                ),
-                if (state.isLoading)
-                  Container(
-                    color: Colors.black12,
-                    child: const Center(
-                      child: CircularProgressIndicator(),
-                    ),
+        create: (context) => EditMyUserCubit(appUser),
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Edit Profile'),
+            backgroundColor: mainColor.shade800,
+          ),
+          body: BlocConsumer<EditMyUserCubit, EditMyUserState>(
+            listener: (context, state) {
+              if (state.isDone) {
+                context.read<AuthCubit>().reloadUser();
+                Navigator.of(context).pop();
+              }
+            },
+            builder: (_, state) {
+              return Stack(
+                children: [
+                  _MyUserSection(
+                    user: appUser,
+                    pickedImage: state.pickedImage,
+                    isSaving: state.isLoading,
                   ),
-              ],
-            );
-          },
-        ),
-      ));
+                  if (state.isLoading)
+                    Container(
+                      color: Colors.black12,
+                      child: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                ],
+              );
+            },
+          ),
+        ));
   }
 }
 
@@ -130,17 +129,13 @@ class _MyUserSectionState extends State<_MyUserSection> {
               decoration: const InputDecoration(labelText: 'Name'),
             ),
             const SizedBox(height: 8),
-
-            // When isSaving is true we disable the button
-            ElevatedButton(
-              onPressed: widget.isSaving
-                  ? null
-                  : () {
-                      context.read<EditMyUserCubit>().saveMyUser(
-                            _nameController.text
-                          );
-                    },
-              child: const Text('Save', style: TextStyle(backgroundColor: mainColor, color: Colors.white)),
+            DefaultButton(
+              onPressed: () {
+                context
+                    .read<EditMyUserCubit>()
+                    .saveMyUser(_nameController.text);
+              },
+              title: 'Save',
             ),
           ],
         ),
